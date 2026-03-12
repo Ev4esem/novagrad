@@ -194,9 +194,118 @@
     background: rgba(14,14,14,0.98);
     border-bottom-color: rgba(200,164,107,0.2);
   }
+
+  /* ═══════════════════════════════
+     PRELOADER
+  ═══════════════════════════════ */
+  #preloader {
+    position: fixed;
+    inset: 0;
+    background: #0a0a0a;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+    overflow: hidden;
+  }
+  #preloader.exit {
+    transform: translateY(-100%);
+  }
+
+  /* Sweep line across bottom */
+  #pre-sweep {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c8a46b 40%, transparent);
+    animation: preSweep 2s ease 0.4s forwards;
+    width: 0;
+  }
+  @keyframes preSweep {
+    0%   { width: 0; left: 0; opacity: 1; }
+    60%  { width: 100%; left: 0; opacity: 1; }
+    100% { width: 0; left: 100%; opacity: 0; }
+  }
+
+  /* Outline text draw */
+  .pre-line {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 10vw, 8.5rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200, 164, 107, 0.75);
+    clip-path: inset(0 100% 0 0);
+    animation: preLineDraw 1.1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    line-height: 1.15;
+    text-align: center;
+    transition: color 0.55s ease, -webkit-text-stroke 0.55s ease;
+  }
+  .pre-line:nth-child(1) { animation-delay: 0.25s; }
+  .pre-line:nth-child(2) { animation-delay: 0.6s; }
+
+  @keyframes preLineDraw {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0%   0 0); }
+  }
+
+  .pre-line.fill {
+    color: #c8a46b;
+    -webkit-text-stroke: 1px transparent;
+  }
+
+  #pre-tag {
+    margin-top: 1.8rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: transparent;
+    transition: color 0.7s ease 0.15s;
+  }
+  #pre-tag.show { color: rgba(200, 164, 107, 0.45); }
+
+  /* Corner accents */
+  .pre-corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    border-color: rgba(200,164,107,0.25);
+    border-style: solid;
+    opacity: 0;
+    animation: preCorner 0.5s ease 1.8s forwards;
+  }
+  @keyframes preCorner { to { opacity: 1; } }
+  .pre-corner-tl { top: 32px; left: 32px; border-width: 1px 0 0 1px; }
+  .pre-corner-tr { top: 32px; right: 32px; border-width: 1px 1px 0 0; }
+  .pre-corner-bl { bottom: 32px; left: 32px; border-width: 0 0 1px 1px; }
+  .pre-corner-br { bottom: 32px; right: 32px; border-width: 0 1px 1px 0; }
+
+  /* Hero clip-path reveal (premium) */
+  @keyframes clipReveal {
+    from { clip-path: inset(0 0 100% 0); opacity: 0; transform: translateY(12px); }
+    to   { clip-path: inset(0 0 0%   0); opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+
+<!-- ════════════════ PRELOADER ════════════════ -->
+<div id="preloader">
+  <div class="pre-corner pre-corner-tl"></div>
+  <div class="pre-corner pre-corner-tr"></div>
+  <div class="pre-corner pre-corner-bl"></div>
+  <div class="pre-corner pre-corner-br"></div>
+  <div id="pre-sweep"></div>
+  <div style="text-align:center; padding: 0 24px;">
+    <span class="pre-line">ЖК</span>
+    <span class="pre-line">ЦЕНТРАЛЬНЫЙ</span>
+  </div>
+  <p id="pre-tag">Премиальная недвижимость · Избербаш</p>
+</div>
 
 <!-- ════════════════ HEADER ════════════════ -->
 <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
@@ -255,13 +364,13 @@
   <!-- Freeze-frame overlay shown after video ends -->
   <div id="hero-freeze" class="absolute inset-0 w-full h-full bg-cover bg-center opacity-0 transition-opacity duration-500" style="background-image: url('hero-last-frame.jpg');"></div>
   <div class="relative z-20 container mx-auto px-6 text-center max-w-4xl">
-    <p class="hero-tag text-primary text-xs uppercase tracking-[0.4em] font-bold mb-6 opacity-0 animate-[fadeInDown_0.8s_ease_0.3s_forwards]">Премиальная недвижимость · Избербаш</p>
-    <h1 class="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight opacity-0 animate-[fadeInUp_0.9s_ease_0.5s_forwards]">
+    <p class="hero-tag text-primary text-xs uppercase tracking-[0.4em] font-bold mb-6 opacity-0 animate-[fadeInDown_0.8s_ease_3.0s_forwards]">Премиальная недвижимость · Избербаш</p>
+    <h1 class="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight opacity-0 animate-[clipReveal_1s_cubic-bezier(0.77,0,0.175,1)_3.2s_forwards]">
       ЖК Центральный — <br/>
       <span class="italic text-primary">Премиальный дом</span> в сердце города
     </h1>
-    <p class="text-lg md:text-xl text-slate-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed opacity-0 animate-[fadeInUp_0.9s_ease_0.7s_forwards]">Стиль жизни и статус в центре Избербаша.</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-[fadeInUp_0.9s_ease_0.9s_forwards]">
+    <p class="text-lg md:text-xl text-slate-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed opacity-0 animate-[fadeInUp_0.9s_ease_3.6s_forwards]">Стиль жизни и статус в центре Избербаша.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-[fadeInUp_0.9s_ease_3.9s_forwards]">
       <button onclick="smoothScroll('#plans')" class="bg-primary text-background-dark px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm hover:brightness-110 transition-all hover:scale-105 active:scale-95">
         Выбрать квартиру
       </button>
@@ -1013,6 +1122,37 @@
 </style>
 
 <script>
+// ══════════════════════════════════
+//  PRELOADER
+// ══════════════════════════════════
+(function () {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+
+  // Lock scroll while preloader is active
+  document.body.style.overflow = 'hidden';
+
+  // Phase 1 — fill strokes → solid gold (at 2.1s, after draw completes)
+  setTimeout(function () {
+    document.querySelectorAll('.pre-line').forEach(function (l) {
+      l.classList.add('fill');
+    });
+    const tag = document.getElementById('pre-tag');
+    if (tag) tag.classList.add('show');
+  }, 2100);
+
+  // Phase 2 — curtain slides up (at 2.85s)
+  setTimeout(function () {
+    preloader.classList.add('exit');
+    document.body.style.overflow = '';
+  }, 2850);
+
+  // Phase 3 — remove from DOM after curtain gone (at 3.9s)
+  setTimeout(function () {
+    if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
+  }, 3900);
+})();
+
 // ══════════════════════════════════
 //  SMOOTH SCROLL & HEADER
 // ══════════════════════════════════
