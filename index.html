@@ -436,7 +436,6 @@
         <button onclick="filterPlans('1')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="1">1-комнатные</button>
         <button onclick="filterPlans('2')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="2">2-комнатные</button>
         <button onclick="filterPlans('3')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="3">3-комнатные</button>
-        <button onclick="filterPlans('p')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="p">Пентхаус</button>
       </div>
 
       <!-- Slider wrapper -->
@@ -446,231 +445,369 @@
            ontouchstart="sliderTouchStart(event)"
            ontouchend="sliderTouchEnd(event)">
 
-        <!-- SLIDE 1: 1-комнатная -->
-        <div class="plan-slide active flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="1" data-index="0">
-          <div class="w-full lg:w-3/5 h-[360px] lg:h-auto relative bg-secondary-dark/30 p-12 flex items-center justify-center">
-            <svg class="plan-svg w-full h-full max-h-[360px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="40" y="40" width="420" height="320" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
-              <line x1="200" y1="40" x2="200" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="40" y1="220" x2="460" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="320" y1="220" x2="320" y2="360" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="200" y1="130" x2="200" y2="160" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M200 130 Q225 130 225 160" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="130" y1="220" x2="160" y2="220" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M130 220 Q130 245 155 245" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <text x="110" y="130" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
-              <text x="340" y="120" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня</text>
-              <text x="110" y="300" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня</text>
-              <text x="260" y="295" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел</text>
-              <text x="400" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Коридор</text>
-              <rect x="60" y="155" width="90" height="45" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="240" y="65" width="130" height="80" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="55" y="235" width="65" height="55" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <line x1="40" y1="75" x2="40" y2="125" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="460" y1="70" x2="460" y2="130" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="90" y1="40" x2="160" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="280" y1="40" x2="390" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-            </svg>
-            <div class="absolute top-6 left-6 bg-primary/10 border border-primary/20 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">Планировка</div>
-          </div>
-          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
-            <div class="mb-8">
-              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 1 из 4</p>
-              <h4 class="font-serif text-3xl text-white mb-4 italic">1-комнатная квартира</h4>
-              <div class="flex items-end gap-2">
-                <span class="text-primary text-6xl font-serif leading-none">42.5</span>
-                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
-              </div>
-            </div>
-            <ul class="space-y-4 mb-10 text-slate-400 font-light">
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">от 5 этажа</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
-            </ul>
-            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
-              Узнать стоимость
-            </button>
-          </div>
-        </div>
 
-        <!-- SLIDE 2: 2-комнатная -->
-        <div class="plan-slide flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="2" data-index="1">
-          <div class="w-full lg:w-3/5 h-[360px] lg:h-auto relative bg-secondary-dark/30 p-10 flex items-center justify-center">
-            <svg class="plan-svg w-full h-full max-h-[360px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 560 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="30" y="30" width="500" height="360" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
-              <line x1="240" y1="30" x2="240" y2="250" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="30" y1="250" x2="530" y2="250" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="380" y1="30" x2="380" y2="250" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="380" y1="250" x2="380" y2="390" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="240" y1="150" x2="240" y2="175" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M240 150 Q265 150 265 175" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="310" y1="30" x2="355" y2="30" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M310 30 Q310 55 355 55" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="150" y1="250" x2="185" y2="250" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M150 250 Q150 278 185 278" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <text x="120" y="140" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
-              <text x="308" y="130" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 1</text>
-              <text x="455" y="130" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 2</text>
-              <text x="120" y="330" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня</text>
-              <text x="308" y="335" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел</text>
-              <text x="455" y="335" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Коридор</text>
-              <rect x="50" y="155" width="100" height="55" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="255" y="55" width="100" height="90" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="395" y="55" width="110" height="90" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="50" y="265" width="80" height="65" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <line x1="30" y1="70" x2="30" y2="140" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="530" y1="60" x2="530" y2="150" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="80" y1="30" x2="185" y2="30" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="400" y1="30" x2="510" y2="30" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-            </svg>
-            <div class="absolute top-6 left-6 bg-primary/10 border border-primary/20 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">Планировка</div>
+        <!-- SLIDE 1: 3-комнатная квартира -->
+        <div class="plan-slide active flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="3" data-index="0" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_01_3k.jpg" alt="3-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">3-комн. · 101,05 м²</div>
           </div>
-          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
             <div class="mb-8">
-              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 2 из 4</p>
-              <h4 class="font-serif text-3xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 1 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">3-комнатная квартира</h4>
               <div class="flex items-end gap-2">
-                <span class="text-primary text-6xl font-serif leading-none">65</span>
+                <span class="text-primary text-5xl font-serif leading-none">101,05</span>
                 <span class="text-slate-400 text-xl font-light mb-1">м²</span>
               </div>
             </div>
             <ul class="space-y-4 mb-10 text-slate-400 font-light">
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">3–10 этажи</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город / море</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
-            </ul>
-            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
-              Узнать стоимость
-            </button>
-          </div>
-        </div>
-
-        <!-- SLIDE 3: 3-комнатная -->
-        <div class="plan-slide flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="3" data-index="2">
-          <div class="w-full lg:w-3/5 h-[380px] lg:h-auto relative bg-secondary-dark/30 p-10 flex items-center justify-center">
-            <svg class="plan-svg w-full h-full max-h-[380px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 600 440" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="25" y="25" width="550" height="390" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
-              <line x1="230" y1="25" x2="230" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="400" y1="25" x2="400" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="25" y1="260" x2="575" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="400" y1="260" x2="400" y2="415" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="230" y1="260" x2="230" y2="415" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="160" y1="180" x2="160" y2="205" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M160 180 Q185 180 185 205" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="310" y1="180" x2="310" y2="205" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M310 180 Q335 180 335 205" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="140" y1="260" x2="175" y2="260" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M140 260 Q140 285 175 285" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <text x="115" y="145" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
-              <text x="315" y="135" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 1</text>
-              <text x="488" y="135" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 2</text>
-              <text x="488" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 3</text>
-              <text x="115" y="348" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня</text>
-              <text x="315" y="340" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел</text>
-              <rect x="45" y="155" width="110" height="60" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="245" y="50" width="130" height="100" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="415" y="50" width="140" height="100" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="415" y="275" width="140" height="100" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="45" y="280" width="80" height="70" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <line x1="25" y1="65" x2="25" y2="145" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="575" y1="60" x2="575" y2="160" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="75" y1="25" x2="180" y2="25" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="420" y1="25" x2="545" y2="25" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-            </svg>
-            <div class="absolute top-6 left-6 bg-primary/10 border border-primary/20 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">Планировка</div>
-          </div>
-          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
-            <div class="mb-8">
-              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 3 из 4</p>
-              <h4 class="font-serif text-3xl text-white mb-4 italic">3-комнатная квартира</h4>
-              <div class="flex items-end gap-2">
-                <span class="text-primary text-6xl font-serif leading-none">89</span>
-                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
-              </div>
-            </div>
-            <ul class="space-y-4 mb-10 text-slate-400 font-light">
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">4–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">3–12 этажи</span></li>
               <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
               <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море и горы</span></li>
               <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
             </ul>
-            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
-              Узнать стоимость
-            </button>
+            <button onclick="openModal('cost')" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all active:scale-95">Узнать стоимость</button>
           </div>
         </div>
-
-        <!-- SLIDE 4: Пентхаус -->
-        <div class="plan-slide flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="p" data-index="3">
-          <div class="w-full lg:w-3/5 h-[400px] lg:h-auto relative bg-secondary-dark/30 p-10 flex items-center justify-center">
-            <svg class="plan-svg w-full h-full max-h-[400px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 620 460" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="20" width="480" height="360" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
-              <!-- Terrace -->
-              <rect x="500" y="20" width="100" height="220" stroke="#c8a46b" stroke-width="1.5" stroke-dasharray="8 4" fill="rgba(200,164,107,0.03)"/>
-              <text x="550" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.7">Терраса</text>
-              <!-- Dividers -->
-              <line x1="240" y1="20" x2="240" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="20" y1="260" x2="500" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="380" y1="20" x2="380" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="240" y1="260" x2="240" y2="380" stroke="#c8a46b" stroke-width="1.5"/>
-              <line x1="380" y1="260" x2="380" y2="380" stroke="#c8a46b" stroke-width="1.5"/>
-              <!-- Door arcs -->
-              <line x1="170" y1="185" x2="170" y2="210" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M170 185 Q195 185 195 210" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="310" y1="185" x2="310" y2="210" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M310 185 Q335 185 335 210" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <line x1="140" y1="260" x2="175" y2="260" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M140 260 Q140 285 175 285" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <!-- Terrace door -->
-              <line x1="500" y1="80" x2="500" y2="120" stroke="#0e0e0e" stroke-width="4"/>
-              <path d="M500 80 Q520 80 520 120" stroke="#c8a46b" stroke-width="1" fill="none"/>
-              <!-- Labels -->
-              <text x="118" y="145" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
-              <text x="308" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 1</text>
-              <text x="440" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 2</text>
-              <text x="118" y="335" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня-столовая</text>
-              <text x="308" y="328" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел 1</text>
-              <text x="440" y="328" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел 2</text>
-              <!-- Furniture -->
-              <rect x="40" y="160" width="130" height="65" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="255" y="45" width="100" height="110" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="395" y="45" width="80" height="110" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <rect x="40" y="275" width="95" height="80" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
-              <!-- Windows -->
-              <line x1="20" y1="60" x2="20" y2="150" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="80" y1="20" x2="190" y2="20" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="390" y1="20" x2="480" y2="20" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <line x1="500" y1="140" x2="500" y2="220" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
-              <!-- Gold corner accent -->
-              <line x1="20" y1="20" x2="20" y2="50" stroke="#c8a46b" stroke-width="3" opacity="1"/>
-              <line x1="20" y1="20" x2="50" y2="20" stroke="#c8a46b" stroke-width="3" opacity="1"/>
-            </svg>
-            <div class="absolute top-6 left-6 bg-primary/20 border border-primary/40 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">VIP Пентхаус</div>
+        <!-- SLIDE 2: 1-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="1" data-index="1" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_02_1k.jpg" alt="1-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">1-комн. · 48,76 м²</div>
           </div>
-          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
             <div class="mb-8">
-              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 4 из 4</p>
-              <h4 class="font-serif text-3xl text-white mb-4 italic">Пентхаус</h4>
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 2 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">1-комнатная квартира</h4>
               <div class="flex items-end gap-2">
-                <span class="text-primary text-6xl font-serif leading-none">152</span>
+                <span class="text-primary text-5xl font-serif leading-none">48,76</span>
                 <span class="text-slate-400 text-xl font-light mb-1">м²</span>
               </div>
             </div>
             <ul class="space-y-4 mb-10 text-slate-400 font-light">
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">11–12 (верхние)</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">4.0 м</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">Панорама 360°</span></li>
-              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Терраса:</span><span class="text-white">от 35 м²</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
             </ul>
-            <button onclick="openModal('penthouse')" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all active:scale-95">
-              Получить предложение
-            </button>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 3: 3-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="3" data-index="2" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_03_3k.jpg" alt="3-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">3-комн. · 106,05 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 3 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">3-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">106,05</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">3–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город / море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 4: 1-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="1" data-index="3" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_04_1k.jpg" alt="1-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">1-комн. · 40,97 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 4 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">1-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">40,97</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 5: 1-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="1" data-index="4" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_05_1k.jpg" alt="1-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">1-комн. · 42,59 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 5 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">1-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">42,59</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 6: 2-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="2" data-index="5" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_06_2k.jpg" alt="2-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">2-комн. · 84,51 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 6 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">84,51</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 7: 1-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="1" data-index="6" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_07_1k.jpg" alt="1-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">1-комн. · 43,32 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 7 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">1-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">43,32</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На горы</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 8: 3-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="3" data-index="7" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_08_3k.jpg" alt="3-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">3-комн. · 101,78 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 8 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">3-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">101,78</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">3–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море и горы</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 9: 2-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="2" data-index="8" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_09_2k.jpg" alt="2-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">2-комн. · 62,61 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 9 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">62,61</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 10: 2-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="2" data-index="9" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_10_2k.jpg" alt="2-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">2-комн. · 72,8 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 10 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">72,8</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 11: 2-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="2" data-index="10" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_11_2k.jpg" alt="2-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">2-комн. · 81,08 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 11 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">81,08</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На горы</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 12: 2-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="2" data-index="11" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_12_2k.jpg" alt="2-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">2-комн. · 66,84 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 12 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">66,84</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город / море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 13: 1-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="1" data-index="12" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_13_1k.jpg" alt="1-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">1-комн. · 45,33 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 13 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">1-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">45,33</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 14: 2-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="2" data-index="13" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_14_2k.jpg" alt="2-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">2-комн. · 79,45 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 14 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">79,45</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–12 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На горы</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
+          </div>
+        </div>
+        <!-- SLIDE 15: 1-комнатная квартира -->
+        <div class="plan-slide  flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl" data-rooms="1" data-index="14" style="min-height:580px">
+          <div class="w-full lg:w-3/5 relative bg-white flex items-center justify-center" style="min-height:400px">
+            <img src="plans/plan_15_1k.jpg" alt="1-комнатная квартира" class="w-full h-full object-contain" style="max-height:580px" loading="lazy"/>
+            <div class="absolute top-4 left-4 bg-background-dark/90 border border-primary/30 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">1-комн. · 46,26 м²</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-12 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Планировка 15 из 15</p>
+              <h4 class="font-serif text-2xl text-white mb-4 italic">1-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-5xl font-serif leading-none">46,26</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">2–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">Узнать стоимость</button>
           </div>
         </div>
 
-        <!-- Navigation Arrows -->
+                <!-- Navigation Arrows -->
         <button id="prev-btn" onclick="slidePrev()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all z-10 hover:scale-110 active:scale-90" aria-label="Предыдущий">
           <span class="material-symbols-outlined">chevron_left</span>
         </button>
@@ -680,11 +817,22 @@
       </div>
 
       <!-- Pagination Dots -->
-      <div id="slider-dots" class="flex justify-center gap-2 mt-8">
+      <div id="slider-dots" class="flex flex-wrap justify-center gap-2 mt-8">
         <button class="dot-btn active" onclick="goToSlide(0)" aria-label="Слайд 1"></button>
         <button class="dot-btn" onclick="goToSlide(1)" aria-label="Слайд 2"></button>
         <button class="dot-btn" onclick="goToSlide(2)" aria-label="Слайд 3"></button>
         <button class="dot-btn" onclick="goToSlide(3)" aria-label="Слайд 4"></button>
+        <button class="dot-btn" onclick="goToSlide(4)" aria-label="Слайд 5"></button>
+        <button class="dot-btn" onclick="goToSlide(5)" aria-label="Слайд 6"></button>
+        <button class="dot-btn" onclick="goToSlide(6)" aria-label="Слайд 7"></button>
+        <button class="dot-btn" onclick="goToSlide(7)" aria-label="Слайд 8"></button>
+        <button class="dot-btn" onclick="goToSlide(8)" aria-label="Слайд 9"></button>
+        <button class="dot-btn" onclick="goToSlide(9)" aria-label="Слайд 10"></button>
+        <button class="dot-btn" onclick="goToSlide(10)" aria-label="Слайд 11"></button>
+        <button class="dot-btn" onclick="goToSlide(11)" aria-label="Слайд 12"></button>
+        <button class="dot-btn" onclick="goToSlide(12)" aria-label="Слайд 13"></button>
+        <button class="dot-btn" onclick="goToSlide(13)" aria-label="Слайд 14"></button>
+        <button class="dot-btn" onclick="goToSlide(14)" aria-label="Слайд 15"></button>
       </div>
     </div>
   </div>
