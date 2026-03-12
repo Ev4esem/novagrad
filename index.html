@@ -246,7 +246,19 @@
 <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
   <div class="absolute inset-0 bg-black/40 z-10"></div>
   <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
-  <div id="hero-bg" class="absolute inset-0 bg-cover bg-center scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C')"></div>
+  <!-- Video background -->
+  <video
+    id="hero-video"
+    class="absolute inset-0 w-full h-full object-cover"
+    src="hero.mp4"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+    poster="hero-last-frame.jpg"
+  ></video>
+  <!-- Freeze-frame overlay shown after video ends -->
+  <div id="hero-freeze" class="absolute inset-0 w-full h-full bg-cover bg-center opacity-0 transition-opacity duration-500" style="background-image: url('hero-last-frame.jpg');"></div>
   <div class="relative z-20 container mx-auto px-6 text-center max-w-4xl">
     <p class="hero-tag text-primary text-xs uppercase tracking-[0.4em] font-bold mb-6 opacity-0 animate-[fadeInDown_0.8s_ease_0.3s_forwards]">Премиальная недвижимость · Избербаш</p>
     <h1 class="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight opacity-0 animate-[fadeInUp_0.9s_ease_0.5s_forwards]">
@@ -806,10 +818,13 @@ window.addEventListener('scroll', () => {
     header.classList.remove('scrolled');
   }
 
-  // Parallax hero
-  const heroBg = document.getElementById('hero-bg');
-  if (heroBg && window.scrollY < window.innerHeight) {
-    heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+  // Parallax hero video
+  const heroVideo = document.getElementById('hero-video');
+  const heroFreeze = document.getElementById('hero-freeze');
+  if (heroVideo && window.scrollY < window.innerHeight) {
+    const offset = window.scrollY * 0.25;
+    heroVideo.style.transform = `translateY(${offset}px)`;
+    heroFreeze.style.transform = `translateY(${offset}px)`;
   }
 
   // Active nav section
@@ -1115,6 +1130,28 @@ function showToast(msg = 'Готово!') {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
 }
+
+// ══════════════════════════════════
+//  HERO VIDEO — freeze on last frame
+// ══════════════════════════════════
+(function() {
+  const video = document.getElementById('hero-video');
+  const freeze = document.getElementById('hero-freeze');
+  if (!video) return;
+
+  // When video ends — pause (stays on last frame) and fade in the freeze overlay
+  video.addEventListener('ended', () => {
+    video.pause();
+    // Fade in the last-frame image on top so it looks identical even if browser clears the video
+    freeze.style.opacity = '1';
+  });
+
+  // Fallback: if video can't load, show the poster image via freeze div immediately
+  video.addEventListener('error', () => {
+    freeze.style.opacity = '1';
+    freeze.style.transition = 'none';
+  });
+})();
 
 // Nav links smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a => {
