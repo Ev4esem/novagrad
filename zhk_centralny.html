@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c8a46b",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#0e0e0e",
+                        "secondary-dark": "#151515",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(21, 21, 21, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(200, 164, 107, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Header / Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">domain</span>
+<span class="font-serif text-xl font-bold tracking-tight text-white uppercase">ЖК Центральный</span>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#about">О проекте</a>
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#advantages">Преимущества</a>
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#architecture">Архитектура</a>
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#location">Расположение</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden lg:block border border-primary text-primary px-6 py-2 text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition-all">
+                    Выбрать квартиру
+                </button>
+<button class="p-2 md:hidden">
+<span class="material-symbols-outlined text-white">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-black/40 z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C')"></div>
+<div class="relative z-20 container mx-auto px-6 text-center max-w-4xl">
+<h1 class="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight">
+                ЖК Центральный — <br/>
+<span class="italic text-primary">Премиальный дом</span> в сердце города
+            </h1>
+<p class="text-lg md:text-xl text-slate-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed">Стиль жизни и статус в центре Избербаша.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-primary text-background-dark px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm hover:brightness-110 transition-all">
+                    Выбрать квартиру
+                </button>
+<button class="border border-primary/50 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm backdrop-blur-sm hover:bg-primary/10 transition-all">
+                    Получить презентацию
+                </button>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+<span class="material-symbols-outlined text-primary/50 text-3xl">expand_more</span>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-24 bg-background-dark" id="about">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<h2 class="font-serif text-4xl md:text-5xl text-white leading-tight">
+                        Дом, который задаёт <br/><span class="text-primary italic">новый уровень</span> жизни
+                    </h2>
+<p class="text-slate-400 text-lg leading-relaxed max-w-xl">Среда, где каждая деталь подчеркивает ваш успех. Премиальное качество и максимальный комфорт.</p>
+<div class="grid grid-cols-2 gap-6 pt-4">
+<div class="p-6 border border-primary/10 bg-secondary-dark/50">
+<p class="text-primary text-3xl font-serif mb-1">12</p>
+<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Этажей в здании</p>
+</div>
+<div class="p-6 border border-primary/10 bg-secondary-dark/50">
+<p class="text-primary text-3xl font-serif mb-1">01</p>
+<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Коммерческий этаж</p>
+</div>
+<div class="p-6 border border-primary/10 bg-secondary-dark/50">
+<p class="text-primary text-3xl font-serif mb-1">VIP</p>
+<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Верхние пентхаусы</p>
+</div>
+<div class="p-6 border border-primary/10 bg-secondary-dark/50">
+<p class="text-primary text-3xl font-serif mb-1">24/7</p>
+<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Закрытая территория</p>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="aspect-[4/5] bg-secondary-dark overflow-hidden">
+<img alt="Luxury apartment interior with large windows" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCATKKfYJe1srdPJ813P2a7o1BbMNMSN4FvKIJQ341dpfKk0ET1ARJWmukQVYISwGjh9ak8zYMLZnlbg4SS5dhwM1QasBrFr9-V0rJlkNrtmrap29RyreWM7MOViCUkmH6OHp92YFQYksjVDSCY8U0nSelYGwivpMrWJfWgjI60z6VUmw3DpLSM6jwwxNIp5qFn2tp2kpC8oQXf7ILM1Y3s4OcxocUrfMsqcjGXMOpvu9TK8IoQYjOwfJ16GV6xboCgfr33QTv0gQZ9"/>
+</div>
+<div class="absolute -bottom-6 -left-6 w-48 h-48 border-l border-b border-primary/40 hidden md:block"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Advantages Section -->
+<section class="py-24 bg-secondary-dark" id="advantages">
+<div class="max-w-7xl mx-auto px-6"><div class="text-center mb-16">
+<h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Преимущества проекта</h3>
+<h2 class="font-serif text-4xl text-white">Искусство комфортной жизни</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-[600px]">
+<!-- Card 1: Панорамное остекление -->
+<div class="relative group overflow-hidden border border-primary/10">
+<img alt="Панорамное остекление" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCATKKfYJe1srdPJ813P2a7o1BbMNMSN4FvKIJQ341dpfKk0ET1ARJWmukQVYISwGjh9ak8zYMLZnlbg4SS5dhwM1QasBrFr9-V0rJlkNrtmrap29RyreWM7MOViCUkmH6OHp92YFQYksjVDSCY8U0nSelYGwivpMrWJfWgjI60z6VUmw3DpLSM6jwwxNIp5qFn2tp2kpC8oQXf7ILM1Y3s4OcxocUrfMsqcjGXMOpvu9TK8IoQYjOwfJ16GV6xboCgfr33QTv0gQZ9"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<span class="material-symbols-outlined text-primary text-3xl mb-4 block">grid_view</span>
+<h4 class="font-serif text-2xl text-white mb-2">Панорамное остекление</h4>
+<p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+                Наслаждайтесь захватывающими видами на город и море через окна от пола до потолка.
+            </p>
+</div>
+</div>
+<!-- Card 2: Высокие потолки -->
+<div class="relative group overflow-hidden border border-primary/10">
+<img alt="Высокие потолки" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<span class="material-symbols-outlined text-primary text-3xl mb-4 block">height</span>
+<h4 class="font-serif text-2xl text-white mb-2">Высокие потолки</h4>
+<p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+                Потолки высотой 3.3 метра создают ощущение бесконечного пространства и свободы.
+            </p>
+</div>
+</div>
+<!-- Card 3: Транспортная доступность -->
+<div class="relative group overflow-hidden border border-primary/10">
+<img alt="Транспортная доступность" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH50PcANTEcul9rXihhnpMRYeEnkrAkwDN1Us9V5HSgoyjqcZBJvpxoBBZl570O8uCBqrFyqS3jQNUL3ZkXKcBBcFAaly6xkdIYMr0-1LUG5osJDlnFHbyJbdFLl16SwNBKsq2mQdPURNvktO01WiIIdqycm7NUXj571HirwM0SfBsJXlUotYWBqzsjJXf08QqOI7pW3KGDCgYi9RA826Qn7F-GhXvpiBhq_-bOXv9Ye2HIGGHUbhNFzg9AUYa1PVvnJTUZ2M5iWic"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<span class="material-symbols-outlined text-primary text-3xl mb-4 block">near_me</span>
+<h4 class="font-serif text-2xl text-white mb-2">Транспортная доступность</h4>
+<p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+                Быстрый доступ к главным магистралям города и основным объектам инфраструктуры.
+            </p>
+</div>
+</div>
+</div></div>
+</section>
+<!-- Reliability Section -->
+<section class="py-24 bg-background-dark border-t border-primary/5">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col items-center text-center mb-16">
+<h2 class="font-serif text-4xl text-white mb-4">Надежность и автономность</h2>
+<div class="w-24 h-px bg-primary/30"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col items-center text-center group">
+<span class="material-symbols-outlined text-primary text-5xl mb-6 font-light group-hover:scale-110 transition-transform">bolt</span>
+<h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em]">Генератор лифта</h5>
+</div>
+<div class="flex flex-col items-center text-center group">
+<span class="material-symbols-outlined text-primary text-5xl mb-6 font-light group-hover:scale-110 transition-transform">water_drop</span>
+<h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em]">Резерв воды 24/7</h5>
+</div>
+<div class="flex flex-col items-center text-center group">
+<span class="material-symbols-outlined text-primary text-5xl mb-6 font-light group-hover:scale-110 transition-transform">settings_input_component</span>
+<h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em]">Автономные системы</h5>
+</div>
+</div>
+</div>
+</section>
+<!-- Architecture Section -->
+<section class="py-24 bg-background-dark overflow-hidden" id="architecture">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col items-center text-center mb-16">
+<h2 class="font-serif text-5xl text-white mb-6">Современная архитектура</h2>
+<p class="text-slate-400 max-w-2xl">Геометрия линий и благородство материалов в новой архитектурной доминанте района.</p>
+</div>
+<div class="relative h-[600px] bg-secondary-dark group">
+<img alt="Close up of modern building facade geometry" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH50PcANTEcul9rXihhnpMRYeEnkrAkwDN1Us9V5HSgoyjqcZBJvpxoBBZl570O8uCBqrFyqS3jQNUL3ZkXKcBBcFAaly6xkdIYMr0-1LUG5osJDlnFHbyJbdFLl16SwNBKsq2mQdPURNvktO01WiIIdqycm7NUXj571HirwM0SfBsJXlUotYWBqzsjJXf08QqOI7pW3KGDCgYi9RA826Qn7F-GhXvpiBhq_-bOXv9Ye2HIGGHUbhNFzg9AUYa1PVvnJTUZ2M5iWic"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-12 left-12 max-w-md">
+<div class="h-1 w-20 bg-primary mb-6"></div>
+<p class="text-white text-2xl font-serif leading-relaxed italic">
+                        «Архитектура — это музыка в пространстве, как бы застывшая музыка».
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-24 bg-secondary-dark" id="plans">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Выбор квартиры</h3>
+<h2 class="font-serif text-5xl text-white">Найдите свое пространство</h2>
+</div>
+<div class="relative group">
+<!-- Slider Container -->
+<div class="flex flex-col lg:flex-row items-center gap-0 bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]">
+<!-- Left: Large Image -->
+<div class="w-full lg:w-3/5 h-[400px] lg:h-[600px] relative bg-secondary-dark/30 p-12 flex items-center justify-center">
+  <svg class="w-full h-full opacity-40" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer walls -->
+    <rect x="40" y="40" width="420" height="320" stroke="#c8a46b" stroke-width="2" fill="none"/>
+    <!-- Room dividers -->
+    <line x1="200" y1="40" x2="200" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
+    <line x1="200" y1="220" x2="200" y2="360" stroke="#c8a46b" stroke-width="1.5"/>
+    <line x1="40" y1="220" x2="460" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
+    <line x1="320" y1="220" x2="320" y2="360" stroke="#c8a46b" stroke-width="1.5"/>
+    <!-- Door openings -->
+    <line x1="200" y1="130" x2="200" y2="160" stroke="#0e0e0e" stroke-width="3"/>
+    <path d="M200 130 Q220 130 220 160" stroke="#c8a46b" stroke-width="1" fill="none"/>
+    <line x1="130" y1="220" x2="160" y2="220" stroke="#0e0e0e" stroke-width="3"/>
+    <path d="M130 220 Q130 240 160 240" stroke="#c8a46b" stroke-width="1" fill="none"/>
+    <!-- Room labels -->
+    <text x="110" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Гостиная</text>
+    <text x="340" y="120" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Спальня</text>
+    <text x="110" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Кухня</text>
+    <text x="260" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Санузел</text>
+    <text x="400" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Коридор</text>
+    <!-- Furniture hints: sofa, table -->
+    <rect x="60" y="160" width="80" height="40" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.5"/>
+    <rect x="240" y="70" width="120" height="80" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.5"/>
+    <rect x="60" y="240" width="60" height="50" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.5"/>
+    <!-- Window marks -->
+    <line x1="40" y1="80" x2="40" y2="120" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
+    <line x1="460" y1="80" x2="460" y2="120" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
+    <line x1="460" y1="250" x2="460" y2="300" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
+    <line x1="80" y1="40" x2="150" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
+    <line x1="280" y1="40" x2="380" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
+  </svg>
+<div class="absolute top-8 left-8 bg-primary/10 backdrop-blur-md border border-primary/20 px-4 py-2 text-primary text-xs font-bold uppercase tracking-widest">
+                    Вариант планировки
+                </div>
+</div>
+<!-- Right: Details -->
+<div class="w-full lg:w-2/5 p-12 lg:p-16 flex flex-col justify-center bg-background-dark">
+<div class="mb-8">
+<h4 class="font-serif text-4xl text-white mb-4 italic">1-комнатная квартира</h4>
+<div class="flex items-end gap-2">
+<span class="text-primary text-6xl font-serif leading-none">42.5</span>
+<span class="text-slate-400 text-xl font-light mb-1">м²</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 text-slate-400 font-light">
+<li class="flex justify-between border-b border-primary/10 pb-2">
+<span>Этаж:</span>
+<span class="text-white">от 5 этажа</span>
+</li>
+<li class="flex justify-between border-b border-primary/10 pb-2">
+<span>Потолки:</span>
+<span class="text-white">3.3 м</span>
+</li>
+<li class="flex justify-between border-b border-primary/10 pb-2">
+<span>Вид:</span>
+<span class="text-white">На море</span>
+</li>
+</ul>
+<button class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all">
+                    Узнать стоимость
+                </button>
+</div>
+</div>
+<!-- Navigation Arrows -->
+<button class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-14 h-14 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all rounded-full hidden lg:flex">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-14 h-14 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all rounded-full hidden lg:flex">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<!-- Pagination Dots -->
+<div class="flex justify-center gap-4 mt-12">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="w-2 h-2 rounded-full bg-primary/20"></span>
+<span class="w-2 h-2 rounded-full bg-primary/20"></span>
+<span class="w-2 h-2 rounded-full bg-primary/20"></span>
+</div>
+</div>
+</div>
+</section>
+<!-- Location Section -->
+<section class="py-24 bg-secondary-dark" id="location">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid lg:grid-cols-2 gap-16 items-start">
+<div>
+<h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Расположение</h3>
+<h2 class="font-serif text-4xl text-white mb-8">Жизнь в центре города</h2>
+<ul class="space-y-6">
+<li class="flex items-center gap-4 text-slate-300">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+<span class="text-lg">Центральный пляж в 10 минутах пешком</span>
+</li>
+<li class="flex items-center gap-4 text-slate-300">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+<span class="text-lg">Ведущие школы и детские сады города</span>
+</li>
+<li class="flex items-center gap-4 text-slate-300">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+<span class="text-lg">Лучшие рестораны и кофейни в шаговой доступности</span>
+</li>
+<li class="flex items-center gap-4 text-slate-300">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+<span class="text-lg">Парковые зоны и места для отдыха</span>
+</li>
+</ul>
+<div class="mt-12 p-8 border border-primary/20 glass-card">
+<p class="text-primary font-serif text-xl mb-2 italic">Адрес объекта:</p>
+<p class="text-white text-lg">г. Избербаш, ул. Центральная, д. 42</p>
+</div>
+</div>
+<div class="relative h-[500px] w-full bg-background-dark border border-primary/10 overflow-hidden shadow-2xl">
+<div class="absolute inset-0 opacity-40 mix-blend-luminosity grayscale" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-wEvqUtNWveDtBJfC5LA1EaLTL8PzT-LTOmy2H-zON-6no43VlTiMKquCT4ad3xtwC_31C6JWe_BKIqLYzIFWLEjaa9l42U-WNlfctzY92RlwNikbcxZoZ-doPxPiEM_yzMvb2JP9w9SRZ3eVIFToJPh1pIkkLFO_MtkUnWqrOPFBVMd7E5FZ7vSRafu-XXvEbRTOLbjyA-MUDCkyWwHOy525wcYYkH1XaZ530pHHoujwZph_BZ1hTaZwIxJ3ri_wbsAdWyTFVE7t'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="relative">
+<div class="absolute -inset-4 bg-primary/20 rounded-full animate-ping"></div>
+<span class="material-symbols-outlined text-primary text-5xl relative z-10">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-12 bg-background-dark border-t border-primary/10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">domain</span>
+<span class="font-serif text-xl font-bold tracking-tight text-white uppercase">ЖК Центральный</span>
+</div>
+<p class="text-slate-500 text-sm">© 2024 Все права защищены. Проектная декларация на сайте наш.дом.рф</p>
+<div class="flex gap-6">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">call</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
