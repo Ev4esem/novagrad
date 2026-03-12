@@ -1,365 +1,1131 @@
 <!DOCTYPE html>
-<html class="dark" lang="ru"><head>
+<html class="dark" lang="ru">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#c8a46b",
-                        "background-light": "#f8f7f6",
-                        "background-dark": "#0e0e0e",
-                        "secondary-dark": "#151515",
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"],
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                },
-            },
-        }
-    </script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#c8a46b",
+          "background-light": "#f8f7f6",
+          "background-dark": "#0e0e0e",
+          "secondary-dark": "#151515",
+        },
+        fontFamily: {
+          "display": ["Inter", "sans-serif"],
+          "serif": ["Playfair Display", "serif"],
+        },
+        borderRadius: {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+      },
+    },
+  }
+</script>
 <style>
-        .glass-card {
-            background: rgba(21, 21, 21, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(200, 164, 107, 0.1);
-        }
-    </style>
+  .glass-card {
+    background: rgba(21, 21, 21, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(200, 164, 107, 0.1);
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Stagger children */
+  .stagger-children > * { transition-delay: 0s; }
+  .stagger-children > *:nth-child(1) { transition-delay: 0.05s; }
+  .stagger-children > *:nth-child(2) { transition-delay: 0.15s; }
+  .stagger-children > *:nth-child(3) { transition-delay: 0.25s; }
+  .stagger-children > *:nth-child(4) { transition-delay: 0.35s; }
+
+  /* Floor plan slider */
+  .plan-slide {
+    display: none;
+    animation: fadeSlide 0.5s ease;
+  }
+  .plan-slide.active {
+    display: flex;
+  }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeSlideLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .plan-slide.slide-left {
+    animation: fadeSlideLeft 0.5s ease;
+  }
+
+  /* Nav underline */
+  nav a { position: relative; }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: #c8a46b;
+    transition: width 0.3s ease;
+  }
+  nav a:hover::after,
+  nav a.active::after { width: 100%; }
+
+  /* Modal */
+  #modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+  }
+  #modal-overlay.open { display: flex; }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    background: #151515;
+    border: 1px solid rgba(200,164,107,0.4);
+    color: #fff;
+    padding: 16px 24px;
+    font-size: 14px;
+    z-index: 500;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 320px;
+  }
+  #toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Hero parallax bg */
+  #hero-bg {
+    transition: transform 0.1s linear;
+  }
+
+  /* Stat counters */
+  .counter { display: inline-block; }
+
+  /* Mobile menu */
+  #mobile-menu {
+    display: none;
+    position: fixed;
+    top: 80px; left: 0; right: 0;
+    background: rgba(14,14,14,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(200,164,107,0.15);
+    z-index: 49;
+    padding: 24px 24px 32px;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  #mobile-menu.open {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Dot indicators */
+  .dot-btn {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(200,164,107,0.2);
+    border: none; cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .dot-btn.active {
+    background: #c8a46b;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* SVG floor plan animation */
+  .plan-svg line, .plan-svg rect, .plan-svg path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 1.2s ease forwards;
+  }
+  @keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Header scroll effect */
+  #header {
+    transition: all 0.3s ease;
+  }
+  #header.scrolled {
+    background: rgba(14,14,14,0.98);
+    border-bottom-color: rgba(200,164,107,0.2);
+  }
+</style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
-<!-- Header / Navigation -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
-<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-3xl">domain</span>
-<span class="font-serif text-xl font-bold tracking-tight text-white uppercase">ЖК Центральный</span>
-</div>
-<nav class="hidden md:flex items-center gap-10">
-<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#about">О проекте</a>
-<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#advantages">Преимущества</a>
-<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#architecture">Архитектура</a>
-<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#location">Расположение</a>
-</nav>
-<div class="flex items-center gap-4">
-<button class="hidden lg:block border border-primary text-primary px-6 py-2 text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition-all">
-                    Выбрать квартиру
-                </button>
-<button class="p-2 md:hidden">
-<span class="material-symbols-outlined text-white">menu</span>
-</button>
-</div>
-</div>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header id="header" class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToTop()">
+      <span class="material-symbols-outlined text-primary text-3xl">domain</span>
+      <span class="font-serif text-xl font-bold tracking-tight text-white uppercase">ЖК Центральный</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-10">
+      <a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-slate-300" href="#about">О проекте</a>
+      <a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-slate-300" href="#advantages">Преимущества</a>
+      <a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-slate-300" href="#architecture">Архитектура</a>
+      <a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-slate-300" href="#plans">Планировки</a>
+      <a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest text-slate-300" href="#location">Расположение</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <button onclick="openModal()" class="hidden lg:block border border-primary text-primary px-6 py-2 text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition-all">
+        Выбрать квартиру
+      </button>
+      <button id="menu-btn" onclick="toggleMenu()" class="p-2 md:hidden" aria-label="Меню">
+        <span class="material-symbols-outlined text-white text-2xl" id="menu-icon">menu</span>
+      </button>
+    </div>
+  </div>
 </header>
-<!-- Hero Section -->
+
+<!-- Mobile Menu -->
+<div id="mobile-menu">
+  <div class="flex flex-col gap-6">
+    <a onclick="closeMenu()" class="text-base font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest" href="#about">О проекте</a>
+    <a onclick="closeMenu()" class="text-base font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest" href="#advantages">Преимущества</a>
+    <a onclick="closeMenu()" class="text-base font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest" href="#architecture">Архитектура</a>
+    <a onclick="closeMenu()" class="text-base font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest" href="#plans">Планировки</a>
+    <a onclick="closeMenu()" class="text-base font-medium text-slate-300 hover:text-primary transition-colors uppercase tracking-widest" href="#location">Расположение</a>
+    <button onclick="closeMenu(); openModal();" class="mt-2 border border-primary text-primary px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition-all text-left">
+      Выбрать квартиру
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════ HERO ════════════════ -->
 <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
-<div class="absolute inset-0 bg-black/40 z-10"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
-<div class="absolute inset-0 bg-cover bg-center scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C')"></div>
-<div class="relative z-20 container mx-auto px-6 text-center max-w-4xl">
-<h1 class="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight">
-                ЖК Центральный — <br/>
-<span class="italic text-primary">Премиальный дом</span> в сердце города
-            </h1>
-<p class="text-lg md:text-xl text-slate-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed">Стиль жизни и статус в центре Избербаша.</p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-<button class="bg-primary text-background-dark px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm hover:brightness-110 transition-all">
-                    Выбрать квартиру
-                </button>
-<button class="border border-primary/50 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm backdrop-blur-sm hover:bg-primary/10 transition-all">
-                    Получить презентацию
-                </button>
-</div>
-</div>
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-<span class="material-symbols-outlined text-primary/50 text-3xl">expand_more</span>
-</div>
+  <div class="absolute inset-0 bg-black/40 z-10"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent z-10"></div>
+  <div id="hero-bg" class="absolute inset-0 bg-cover bg-center scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C')"></div>
+  <div class="relative z-20 container mx-auto px-6 text-center max-w-4xl">
+    <p class="hero-tag text-primary text-xs uppercase tracking-[0.4em] font-bold mb-6 opacity-0 animate-[fadeInDown_0.8s_ease_0.3s_forwards]">Премиальная недвижимость · Избербаш</p>
+    <h1 class="font-serif text-5xl md:text-7xl text-white mb-6 leading-tight opacity-0 animate-[fadeInUp_0.9s_ease_0.5s_forwards]">
+      ЖК Центральный — <br/>
+      <span class="italic text-primary">Премиальный дом</span> в сердце города
+    </h1>
+    <p class="text-lg md:text-xl text-slate-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed opacity-0 animate-[fadeInUp_0.9s_ease_0.7s_forwards]">Стиль жизни и статус в центре Избербаша.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-[fadeInUp_0.9s_ease_0.9s_forwards]">
+      <button onclick="smoothScroll('#plans')" class="bg-primary text-background-dark px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm hover:brightness-110 transition-all hover:scale-105 active:scale-95">
+        Выбрать квартиру
+      </button>
+      <button onclick="openModal('presentation')" class="border border-primary/50 text-white px-10 py-4 font-bold uppercase tracking-[0.2em] text-sm backdrop-blur-sm hover:bg-primary/10 transition-all hover:border-primary active:scale-95">
+        Получить презентацию
+      </button>
+    </div>
+  </div>
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce cursor-pointer" onclick="smoothScroll('#about')">
+    <span class="material-symbols-outlined text-primary/60 text-3xl">expand_more</span>
+  </div>
 </section>
-<!-- About Section -->
+
+<!-- ════════════════ ABOUT ════════════════ -->
 <section class="py-24 bg-background-dark" id="about">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid lg:grid-cols-2 gap-16 items-center">
-<div class="space-y-8">
-<h2 class="font-serif text-4xl md:text-5xl text-white leading-tight">
-                        Дом, который задаёт <br/><span class="text-primary italic">новый уровень</span> жизни
-                    </h2>
-<p class="text-slate-400 text-lg leading-relaxed max-w-xl">Среда, где каждая деталь подчеркивает ваш успех. Премиальное качество и максимальный комфорт.</p>
-<div class="grid grid-cols-2 gap-6 pt-4">
-<div class="p-6 border border-primary/10 bg-secondary-dark/50">
-<p class="text-primary text-3xl font-serif mb-1">12</p>
-<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Этажей в здании</p>
-</div>
-<div class="p-6 border border-primary/10 bg-secondary-dark/50">
-<p class="text-primary text-3xl font-serif mb-1">01</p>
-<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Коммерческий этаж</p>
-</div>
-<div class="p-6 border border-primary/10 bg-secondary-dark/50">
-<p class="text-primary text-3xl font-serif mb-1">VIP</p>
-<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Верхние пентхаусы</p>
-</div>
-<div class="p-6 border border-primary/10 bg-secondary-dark/50">
-<p class="text-primary text-3xl font-serif mb-1">24/7</p>
-<p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Закрытая территория</p>
-</div>
-</div>
-</div>
-<div class="relative group">
-<div class="aspect-[4/5] bg-secondary-dark overflow-hidden">
-<img alt="Luxury apartment interior with large windows" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCATKKfYJe1srdPJ813P2a7o1BbMNMSN4FvKIJQ341dpfKk0ET1ARJWmukQVYISwGjh9ak8zYMLZnlbg4SS5dhwM1QasBrFr9-V0rJlkNrtmrap29RyreWM7MOViCUkmH6OHp92YFQYksjVDSCY8U0nSelYGwivpMrWJfWgjI60z6VUmw3DpLSM6jwwxNIp5qFn2tp2kpC8oQXf7ILM1Y3s4OcxocUrfMsqcjGXMOpvu9TK8IoQYjOwfJ16GV6xboCgfr33QTv0gQZ9"/>
-</div>
-<div class="absolute -bottom-6 -left-6 w-48 h-48 border-l border-b border-primary/40 hidden md:block"></div>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-8 reveal-left">
+        <p class="text-primary text-xs uppercase tracking-[0.4em] font-bold">О проекте</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white leading-tight">
+          Дом, который задаёт <br/><span class="text-primary italic">новый уровень</span> жизни
+        </h2>
+        <p class="text-slate-400 text-lg leading-relaxed max-w-xl">Среда, где каждая деталь подчеркивает ваш успех. Премиальное качество и максимальный комфорт.</p>
+        <div class="grid grid-cols-2 gap-6 pt-4 stagger-children">
+          <div class="stat-card p-6 border border-primary/10 bg-secondary-dark/50 hover:border-primary/30 transition-all cursor-default reveal">
+            <p class="text-primary text-3xl font-serif mb-1" data-target="12" data-suffix="">12</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Этажей в здании</p>
+          </div>
+          <div class="stat-card p-6 border border-primary/10 bg-secondary-dark/50 hover:border-primary/30 transition-all cursor-default reveal">
+            <p class="text-primary text-3xl font-serif mb-1" data-target="1" data-suffix="">01</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Коммерческий этаж</p>
+          </div>
+          <div class="stat-card p-6 border border-primary/10 bg-secondary-dark/50 hover:border-primary/30 transition-all cursor-default reveal">
+            <p class="text-primary text-3xl font-serif mb-1">VIP</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Верхние пентхаусы</p>
+          </div>
+          <div class="stat-card p-6 border border-primary/10 bg-secondary-dark/50 hover:border-primary/30 transition-all cursor-default reveal">
+            <p class="text-primary text-3xl font-serif mb-1">24/7</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500 font-bold">Закрытая территория</p>
+          </div>
+        </div>
+      </div>
+      <div class="relative group reveal-right">
+        <div class="aspect-[4/5] bg-secondary-dark overflow-hidden">
+          <img alt="Luxury apartment interior with large windows" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCATKKfYJe1srdPJ813P2a7o1BbMNMSN4FvKIJQ341dpfKk0ET1ARJWmukQVYISwGjh9ak8zYMLZnlbg4SS5dhwM1QasBrFr9-V0rJlkNrtmrap29RyreWM7MOViCUkmH6OHp92YFQYksjVDSCY8U0nSelYGwivpMrWJfWgjI60z6VUmw3DpLSM6jwwxNIp5qFn2tp2kpC8oQXf7ILM1Y3s4OcxocUrfMsqcjGXMOpvu9TK8IoQYjOwfJ16GV6xboCgfr33QTv0gQZ9"/>
+        </div>
+        <div class="absolute -bottom-6 -left-6 w-48 h-48 border-l border-b border-primary/40 hidden md:block"></div>
+        <div class="absolute -top-6 -right-6 w-32 h-32 border-t border-r border-primary/20 hidden md:block"></div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Advantages Section -->
+
+<!-- ════════════════ ADVANTAGES ════════════════ -->
 <section class="py-24 bg-secondary-dark" id="advantages">
-<div class="max-w-7xl mx-auto px-6"><div class="text-center mb-16">
-<h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Преимущества проекта</h3>
-<h2 class="font-serif text-4xl text-white">Искусство комфортной жизни</h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-[600px]">
-<!-- Card 1: Панорамное остекление -->
-<div class="relative group overflow-hidden border border-primary/10">
-<img alt="Панорамное остекление" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCATKKfYJe1srdPJ813P2a7o1BbMNMSN4FvKIJQ341dpfKk0ET1ARJWmukQVYISwGjh9ak8zYMLZnlbg4SS5dhwM1QasBrFr9-V0rJlkNrtmrap29RyreWM7MOViCUkmH6OHp92YFQYksjVDSCY8U0nSelYGwivpMrWJfWgjI60z6VUmw3DpLSM6jwwxNIp5qFn2tp2kpC8oQXf7ILM1Y3s4OcxocUrfMsqcjGXMOpvu9TK8IoQYjOwfJ16GV6xboCgfr33QTv0gQZ9"/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full">
-<span class="material-symbols-outlined text-primary text-3xl mb-4 block">grid_view</span>
-<h4 class="font-serif text-2xl text-white mb-2">Панорамное остекление</h4>
-<p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
-                Наслаждайтесь захватывающими видами на город и море через окна от пола до потолка.
-            </p>
-</div>
-</div>
-<!-- Card 2: Высокие потолки -->
-<div class="relative group overflow-hidden border border-primary/10">
-<img alt="Высокие потолки" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C"/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full">
-<span class="material-symbols-outlined text-primary text-3xl mb-4 block">height</span>
-<h4 class="font-serif text-2xl text-white mb-2">Высокие потолки</h4>
-<p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
-                Потолки высотой 3.3 метра создают ощущение бесконечного пространства и свободы.
-            </p>
-</div>
-</div>
-<!-- Card 3: Транспортная доступность -->
-<div class="relative group overflow-hidden border border-primary/10">
-<img alt="Транспортная доступность" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH50PcANTEcul9rXihhnpMRYeEnkrAkwDN1Us9V5HSgoyjqcZBJvpxoBBZl570O8uCBqrFyqS3jQNUL3ZkXKcBBcFAaly6xkdIYMr0-1LUG5osJDlnFHbyJbdFLl16SwNBKsq2mQdPURNvktO01WiIIdqycm7NUXj571HirwM0SfBsJXlUotYWBqzsjJXf08QqOI7pW3KGDCgYi9RA826Qn7F-GhXvpiBhq_-bOXv9Ye2HIGGHUbhNFzg9AUYa1PVvnJTUZ2M5iWic"/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full">
-<span class="material-symbols-outlined text-primary text-3xl mb-4 block">near_me</span>
-<h4 class="font-serif text-2xl text-white mb-2">Транспортная доступность</h4>
-<p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-20 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
-                Быстрый доступ к главным магистралям города и основным объектам инфраструктуры.
-            </p>
-</div>
-</div>
-</div></div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Преимущества проекта</h3>
+      <h2 class="font-serif text-4xl text-white">Искусство комфортной жизни</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-[600px]">
+      <div class="relative group overflow-hidden border border-primary/10 cursor-pointer min-h-[300px] md:min-h-0 reveal" style="transition-delay:0.1s">
+        <img alt="Панорамное остекление" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCATKKfYJe1srdPJ813P2a7o1BbMNMSN4FvKIJQ341dpfKk0ET1ARJWmukQVYISwGjh9ak8zYMLZnlbg4SS5dhwM1QasBrFr9-V0rJlkNrtmrap29RyreWM7MOViCUkmH6OHp92YFQYksjVDSCY8U0nSelYGwivpMrWJfWgjI60z6VUmw3DpLSM6jwwxNIp5qFn2tp2kpC8oQXf7ILM1Y3s4OcxocUrfMsqcjGXMOpvu9TK8IoQYjOwfJ16GV6xboCgfr33QTv0gQZ9"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <span class="material-symbols-outlined text-primary text-3xl mb-4 block transition-transform duration-300 group-hover:scale-110">grid_view</span>
+          <h4 class="font-serif text-2xl text-white mb-2">Панорамное остекление</h4>
+          <p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-24 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+            Наслаждайтесь захватывающими видами на город и море через окна от пола до потолка.
+          </p>
+        </div>
+      </div>
+      <div class="relative group overflow-hidden border border-primary/10 cursor-pointer min-h-[300px] md:min-h-0 reveal" style="transition-delay:0.2s">
+        <img alt="Высокие потолки" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgBM2VkhL3F2xPoG7kKjMGPPJDf772ThMYWPh0wHdzu6BcltI7hClAkzp6wCsE0pf51RV3GoqxII4caaRNHU0U_2nPTzMH2Sq75pU3Cy6QYH-S_nIc_FxuEVbVjPcSya3ReBRBzMFE29ipFlpiX7fmgA9sABrWjdk3YCKfrdZnQBNEzcDL-t8OKC99AI-UEYdyz2lvkWbhlvqtpCN4j0U7lgc_eoHTbbObV2LpCMPnns41n_YwhgOdeCg2-9i4VHidfxJ3heHOw7_C"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <span class="material-symbols-outlined text-primary text-3xl mb-4 block transition-transform duration-300 group-hover:scale-110">height</span>
+          <h4 class="font-serif text-2xl text-white mb-2">Высокие потолки</h4>
+          <p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-24 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+            Потолки высотой 3.3 метра создают ощущение бесконечного пространства и свободы.
+          </p>
+        </div>
+      </div>
+      <div class="relative group overflow-hidden border border-primary/10 cursor-pointer min-h-[300px] md:min-h-0 reveal" style="transition-delay:0.3s">
+        <img alt="Транспортная доступность" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH50PcANTEcul9rXihhnpMRYeEnkrAkwDN1Us9V5HSgoyjqcZBJvpxoBBZl570O8uCBqrFyqS3jQNUL3ZkXKcBBcFAaly6xkdIYMr0-1LUG5osJDlnFHbyJbdFLl16SwNBKsq2mQdPURNvktO01WiIIdqycm7NUXj571HirwM0SfBsJXlUotYWBqzsjJXf08QqOI7pW3KGDCgYi9RA826Qn7F-GhXvpiBhq_-bOXv9Ye2HIGGHUbhNFzg9AUYa1PVvnJTUZ2M5iWic"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <span class="material-symbols-outlined text-primary text-3xl mb-4 block transition-transform duration-300 group-hover:scale-110">near_me</span>
+          <h4 class="font-serif text-2xl text-white mb-2">Транспортная доступность</h4>
+          <p class="text-slate-300 text-sm leading-relaxed max-h-0 group-hover:max-h-24 overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+            Быстрый доступ к главным магистралям города и основным объектам инфраструктуры.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Reliability Section -->
+
+<!-- ════════════════ RELIABILITY ════════════════ -->
 <section class="py-24 bg-background-dark border-t border-primary/5">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex flex-col items-center text-center mb-16">
-<h2 class="font-serif text-4xl text-white mb-4">Надежность и автономность</h2>
-<div class="w-24 h-px bg-primary/30"></div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-<div class="flex flex-col items-center text-center group">
-<span class="material-symbols-outlined text-primary text-5xl mb-6 font-light group-hover:scale-110 transition-transform">bolt</span>
-<h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em]">Генератор лифта</h5>
-</div>
-<div class="flex flex-col items-center text-center group">
-<span class="material-symbols-outlined text-primary text-5xl mb-6 font-light group-hover:scale-110 transition-transform">water_drop</span>
-<h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em]">Резерв воды 24/7</h5>
-</div>
-<div class="flex flex-col items-center text-center group">
-<span class="material-symbols-outlined text-primary text-5xl mb-6 font-light group-hover:scale-110 transition-transform">settings_input_component</span>
-<h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em]">Автономные системы</h5>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col items-center text-center mb-16 reveal">
+      <h2 class="font-serif text-4xl text-white mb-4">Надежность и автономность</h2>
+      <div class="w-24 h-px bg-primary/30"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div class="flex flex-col items-center text-center group reveal" style="transition-delay:0.1s">
+        <div class="relative mb-6">
+          <div class="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 ease-out"></div>
+          <span class="material-symbols-outlined text-primary text-5xl font-light group-hover:scale-110 transition-transform relative z-10">bolt</span>
+        </div>
+        <h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em] mb-2">Генератор лифта</h5>
+        <p class="text-slate-500 text-xs leading-relaxed max-w-xs">Резервный генератор обеспечивает работу лифтов при отключении электроэнергии</p>
+      </div>
+      <div class="flex flex-col items-center text-center group reveal" style="transition-delay:0.2s">
+        <div class="relative mb-6">
+          <div class="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 ease-out"></div>
+          <span class="material-symbols-outlined text-primary text-5xl font-light group-hover:scale-110 transition-transform relative z-10">water_drop</span>
+        </div>
+        <h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em] mb-2">Резерв воды 24/7</h5>
+        <p class="text-slate-500 text-xs leading-relaxed max-w-xs">Система накопительных баков гарантирует бесперебойное водоснабжение</p>
+      </div>
+      <div class="flex flex-col items-center text-center group reveal" style="transition-delay:0.3s">
+        <div class="relative mb-6">
+          <div class="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 ease-out"></div>
+          <span class="material-symbols-outlined text-primary text-5xl font-light group-hover:scale-110 transition-transform relative z-10">settings_input_component</span>
+        </div>
+        <h5 class="text-white font-bold uppercase text-[10px] tracking-[0.3em] mb-2">Автономные системы</h5>
+        <p class="text-slate-500 text-xs leading-relaxed max-w-xs">Независимые инженерные системы с дублирующими контурами безопасности</p>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Architecture Section -->
+
+<!-- ════════════════ ARCHITECTURE ════════════════ -->
 <section class="py-24 bg-background-dark overflow-hidden" id="architecture">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex flex-col items-center text-center mb-16">
-<h2 class="font-serif text-5xl text-white mb-6">Современная архитектура</h2>
-<p class="text-slate-400 max-w-2xl">Геометрия линий и благородство материалов в новой архитектурной доминанте района.</p>
-</div>
-<div class="relative h-[600px] bg-secondary-dark group">
-<img alt="Close up of modern building facade geometry" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH50PcANTEcul9rXihhnpMRYeEnkrAkwDN1Us9V5HSgoyjqcZBJvpxoBBZl570O8uCBqrFyqS3jQNUL3ZkXKcBBcFAaly6xkdIYMr0-1LUG5osJDlnFHbyJbdFLl16SwNBKsq2mQdPURNvktO01WiIIdqycm7NUXj571HirwM0SfBsJXlUotYWBqzsjJXf08QqOI7pW3KGDCgYi9RA826Qn7F-GhXvpiBhq_-bOXv9Ye2HIGGHUbhNFzg9AUYa1PVvnJTUZ2M5iWic"/>
-<div class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-transparent to-transparent"></div>
-<div class="absolute bottom-12 left-12 max-w-md">
-<div class="h-1 w-20 bg-primary mb-6"></div>
-<p class="text-white text-2xl font-serif leading-relaxed italic">
-                        «Архитектура — это музыка в пространстве, как бы застывшая музыка».
-                    </p>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col items-center text-center mb-16 reveal">
+      <h2 class="font-serif text-5xl text-white mb-6">Современная архитектура</h2>
+      <p class="text-slate-400 max-w-2xl">Геометрия линий и благородство материалов в новой архитектурной доминанте района.</p>
+    </div>
+    <div class="relative h-[600px] bg-secondary-dark group reveal">
+      <img alt="Close up of modern building facade geometry" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH50PcANTEcul9rXihhnpMRYeEnkrAkwDN1Us9V5HSgoyjqcZBJvpxoBBZl570O8uCBqrFyqS3jQNUL3ZkXKcBBcFAaly6xkdIYMr0-1LUG5osJDlnFHbyJbdFLl16SwNBKsq2mQdPURNvktO01WiIIdqycm7NUXj571HirwM0SfBsJXlUotYWBqzsjJXf08QqOI7pW3KGDCgYi9RA826Qn7F-GhXvpiBhq_-bOXv9Ye2HIGGHUbhNFzg9AUYa1PVvnJTUZ2M5iWic"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-transparent to-transparent"></div>
+      <div class="absolute bottom-12 left-12 max-w-md">
+        <div class="h-1 w-20 bg-primary mb-6 group-hover:w-40 transition-all duration-700"></div>
+        <p class="text-white text-2xl font-serif leading-relaxed italic">
+          «Архитектура — это музыка в пространстве, как бы застывшая музыка».
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- ════════════════ PLANS / SLIDER ════════════════ -->
 <section class="py-24 bg-secondary-dark" id="plans">
-<div class="max-w-7xl mx-auto px-6">
-<div class="text-center mb-16">
-<h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Выбор квартиры</h3>
-<h2 class="font-serif text-5xl text-white">Найдите свое пространство</h2>
-</div>
-<div class="relative group">
-<!-- Slider Container -->
-<div class="flex flex-col lg:flex-row items-center gap-0 bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]">
-<!-- Left: Large Image -->
-<div class="w-full lg:w-3/5 h-[400px] lg:h-[600px] relative bg-secondary-dark/30 p-12 flex items-center justify-center">
-  <svg class="w-full h-full opacity-40" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Outer walls -->
-    <rect x="40" y="40" width="420" height="320" stroke="#c8a46b" stroke-width="2" fill="none"/>
-    <!-- Room dividers -->
-    <line x1="200" y1="40" x2="200" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
-    <line x1="200" y1="220" x2="200" y2="360" stroke="#c8a46b" stroke-width="1.5"/>
-    <line x1="40" y1="220" x2="460" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
-    <line x1="320" y1="220" x2="320" y2="360" stroke="#c8a46b" stroke-width="1.5"/>
-    <!-- Door openings -->
-    <line x1="200" y1="130" x2="200" y2="160" stroke="#0e0e0e" stroke-width="3"/>
-    <path d="M200 130 Q220 130 220 160" stroke="#c8a46b" stroke-width="1" fill="none"/>
-    <line x1="130" y1="220" x2="160" y2="220" stroke="#0e0e0e" stroke-width="3"/>
-    <path d="M130 220 Q130 240 160 240" stroke="#c8a46b" stroke-width="1" fill="none"/>
-    <!-- Room labels -->
-    <text x="110" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Гостиная</text>
-    <text x="340" y="120" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Спальня</text>
-    <text x="110" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Кухня</text>
-    <text x="260" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Санузел</text>
-    <text x="400" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.8">Коридор</text>
-    <!-- Furniture hints: sofa, table -->
-    <rect x="60" y="160" width="80" height="40" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.5"/>
-    <rect x="240" y="70" width="120" height="80" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.5"/>
-    <rect x="60" y="240" width="60" height="50" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.5"/>
-    <!-- Window marks -->
-    <line x1="40" y1="80" x2="40" y2="120" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
-    <line x1="460" y1="80" x2="460" y2="120" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
-    <line x1="460" y1="250" x2="460" y2="300" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
-    <line x1="80" y1="40" x2="150" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
-    <line x1="280" y1="40" x2="380" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.6"/>
-  </svg>
-<div class="absolute top-8 left-8 bg-primary/10 backdrop-blur-md border border-primary/20 px-4 py-2 text-primary text-xs font-bold uppercase tracking-widest">
-                    Вариант планировки
-                </div>
-</div>
-<!-- Right: Details -->
-<div class="w-full lg:w-2/5 p-12 lg:p-16 flex flex-col justify-center bg-background-dark">
-<div class="mb-8">
-<h4 class="font-serif text-4xl text-white mb-4 italic">1-комнатная квартира</h4>
-<div class="flex items-end gap-2">
-<span class="text-primary text-6xl font-serif leading-none">42.5</span>
-<span class="text-slate-400 text-xl font-light mb-1">м²</span>
-</div>
-</div>
-<ul class="space-y-4 mb-12 text-slate-400 font-light">
-<li class="flex justify-between border-b border-primary/10 pb-2">
-<span>Этаж:</span>
-<span class="text-white">от 5 этажа</span>
-</li>
-<li class="flex justify-between border-b border-primary/10 pb-2">
-<span>Потолки:</span>
-<span class="text-white">3.3 м</span>
-</li>
-<li class="flex justify-between border-b border-primary/10 pb-2">
-<span>Вид:</span>
-<span class="text-white">На море</span>
-</li>
-</ul>
-<button class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all">
-                    Узнать стоимость
-                </button>
-</div>
-</div>
-<!-- Navigation Arrows -->
-<button class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-14 h-14 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all rounded-full hidden lg:flex">
-<span class="material-symbols-outlined">chevron_left</span>
-</button>
-<button class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-14 h-14 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all rounded-full hidden lg:flex">
-<span class="material-symbols-outlined">chevron_right</span>
-</button>
-<!-- Pagination Dots -->
-<div class="flex justify-center gap-4 mt-12">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-<span class="w-2 h-2 rounded-full bg-primary/20"></span>
-<span class="w-2 h-2 rounded-full bg-primary/20"></span>
-<span class="w-2 h-2 rounded-full bg-primary/20"></span>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 reveal">
+      <h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Выбор квартиры</h3>
+      <h2 class="font-serif text-5xl text-white">Найдите свое пространство</h2>
+    </div>
+
+    <div class="reveal">
+      <!-- Type filter tabs -->
+      <div class="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+        <button onclick="filterPlans('all')" class="filter-btn active flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/30 text-primary bg-primary/10 transition-all" data-filter="all">Все</button>
+        <button onclick="filterPlans('1')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="1">1-комнатные</button>
+        <button onclick="filterPlans('2')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="2">2-комнатные</button>
+        <button onclick="filterPlans('3')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="3">3-комнатные</button>
+        <button onclick="filterPlans('p')" class="filter-btn flex-shrink-0 px-6 py-2 text-xs font-bold uppercase tracking-widest border border-primary/10 text-slate-400 hover:border-primary/30 hover:text-primary transition-all" data-filter="p">Пентхаус</button>
+      </div>
+
+      <!-- Slider wrapper -->
+      <div id="slider-wrapper" class="relative"
+           data-touch-start=""
+           onmousedown="sliderDragStart(event)"
+           ontouchstart="sliderTouchStart(event)"
+           ontouchend="sliderTouchEnd(event)">
+
+        <!-- SLIDE 1: 1-комнатная -->
+        <div class="plan-slide active flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="1" data-index="0">
+          <div class="w-full lg:w-3/5 h-[360px] lg:h-auto relative bg-secondary-dark/30 p-12 flex items-center justify-center">
+            <svg class="plan-svg w-full h-full max-h-[360px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="40" y="40" width="420" height="320" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
+              <line x1="200" y1="40" x2="200" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="40" y1="220" x2="460" y2="220" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="320" y1="220" x2="320" y2="360" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="200" y1="130" x2="200" y2="160" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M200 130 Q225 130 225 160" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="130" y1="220" x2="160" y2="220" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M130 220 Q130 245 155 245" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <text x="110" y="130" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
+              <text x="340" y="120" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня</text>
+              <text x="110" y="300" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня</text>
+              <text x="260" y="295" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел</text>
+              <text x="400" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Коридор</text>
+              <rect x="60" y="155" width="90" height="45" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="240" y="65" width="130" height="80" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="55" y="235" width="65" height="55" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <line x1="40" y1="75" x2="40" y2="125" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="460" y1="70" x2="460" y2="130" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="90" y1="40" x2="160" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="280" y1="40" x2="390" y2="40" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+            </svg>
+            <div class="absolute top-6 left-6 bg-primary/10 border border-primary/20 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">Планировка</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 1 из 4</p>
+              <h4 class="font-serif text-3xl text-white mb-4 italic">1-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-6xl font-serif leading-none">42.5</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">от 5 этажа</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
+              Узнать стоимость
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 2: 2-комнатная -->
+        <div class="plan-slide flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="2" data-index="1">
+          <div class="w-full lg:w-3/5 h-[360px] lg:h-auto relative bg-secondary-dark/30 p-10 flex items-center justify-center">
+            <svg class="plan-svg w-full h-full max-h-[360px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 560 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="30" y="30" width="500" height="360" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
+              <line x1="240" y1="30" x2="240" y2="250" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="30" y1="250" x2="530" y2="250" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="380" y1="30" x2="380" y2="250" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="380" y1="250" x2="380" y2="390" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="240" y1="150" x2="240" y2="175" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M240 150 Q265 150 265 175" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="310" y1="30" x2="355" y2="30" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M310 30 Q310 55 355 55" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="150" y1="250" x2="185" y2="250" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M150 250 Q150 278 185 278" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <text x="120" y="140" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
+              <text x="308" y="130" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 1</text>
+              <text x="455" y="130" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 2</text>
+              <text x="120" y="330" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня</text>
+              <text x="308" y="335" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел</text>
+              <text x="455" y="335" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Коридор</text>
+              <rect x="50" y="155" width="100" height="55" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="255" y="55" width="100" height="90" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="395" y="55" width="110" height="90" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="50" y="265" width="80" height="65" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <line x1="30" y1="70" x2="30" y2="140" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="530" y1="60" x2="530" y2="150" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="80" y1="30" x2="185" y2="30" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="400" y1="30" x2="510" y2="30" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+            </svg>
+            <div class="absolute top-6 left-6 bg-primary/10 border border-primary/20 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">Планировка</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 2 из 4</p>
+              <h4 class="font-serif text-3xl text-white mb-4 italic">2-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-6xl font-serif leading-none">65</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">3–10 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На город / море</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
+              Узнать стоимость
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 3: 3-комнатная -->
+        <div class="plan-slide flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="3" data-index="2">
+          <div class="w-full lg:w-3/5 h-[380px] lg:h-auto relative bg-secondary-dark/30 p-10 flex items-center justify-center">
+            <svg class="plan-svg w-full h-full max-h-[380px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 600 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="25" y="25" width="550" height="390" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
+              <line x1="230" y1="25" x2="230" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="400" y1="25" x2="400" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="25" y1="260" x2="575" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="400" y1="260" x2="400" y2="415" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="230" y1="260" x2="230" y2="415" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="160" y1="180" x2="160" y2="205" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M160 180 Q185 180 185 205" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="310" y1="180" x2="310" y2="205" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M310 180 Q335 180 335 205" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="140" y1="260" x2="175" y2="260" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M140 260 Q140 285 175 285" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <text x="115" y="145" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
+              <text x="315" y="135" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 1</text>
+              <text x="488" y="135" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 2</text>
+              <text x="488" y="300" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 3</text>
+              <text x="115" y="348" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня</text>
+              <text x="315" y="340" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел</text>
+              <rect x="45" y="155" width="110" height="60" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="245" y="50" width="130" height="100" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="415" y="50" width="140" height="100" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="415" y="275" width="140" height="100" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="45" y="280" width="80" height="70" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <line x1="25" y1="65" x2="25" y2="145" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="575" y1="60" x2="575" y2="160" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="75" y1="25" x2="180" y2="25" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="420" y1="25" x2="545" y2="25" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+            </svg>
+            <div class="absolute top-6 left-6 bg-primary/10 border border-primary/20 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">Планировка</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 3 из 4</p>
+              <h4 class="font-serif text-3xl text-white mb-4 italic">3-комнатная квартира</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-6xl font-serif leading-none">89</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">4–11 этажи</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">3.3 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">На море и горы</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Сдача:</span><span class="text-white">IV кв. 2025</span></li>
+            </ul>
+            <button onclick="openModal('cost')" class="w-full py-4 border border-primary text-primary font-bold uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
+              Узнать стоимость
+            </button>
+          </div>
+        </div>
+
+        <!-- SLIDE 4: Пентхаус -->
+        <div class="plan-slide flex-col lg:flex-row items-stretch bg-background-dark border border-primary/10 overflow-hidden shadow-2xl min-h-[600px]" data-rooms="p" data-index="3">
+          <div class="w-full lg:w-3/5 h-[400px] lg:h-auto relative bg-secondary-dark/30 p-10 flex items-center justify-center">
+            <svg class="plan-svg w-full h-full max-h-[400px] opacity-50 hover:opacity-80 transition-opacity" viewBox="0 0 620 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="20" width="480" height="360" stroke="#c8a46b" stroke-width="2" fill="rgba(200,164,107,0.03)"/>
+              <!-- Terrace -->
+              <rect x="500" y="20" width="100" height="220" stroke="#c8a46b" stroke-width="1.5" stroke-dasharray="8 4" fill="rgba(200,164,107,0.03)"/>
+              <text x="550" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.7">Терраса</text>
+              <!-- Dividers -->
+              <line x1="240" y1="20" x2="240" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="20" y1="260" x2="500" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="380" y1="20" x2="380" y2="260" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="240" y1="260" x2="240" y2="380" stroke="#c8a46b" stroke-width="1.5"/>
+              <line x1="380" y1="260" x2="380" y2="380" stroke="#c8a46b" stroke-width="1.5"/>
+              <!-- Door arcs -->
+              <line x1="170" y1="185" x2="170" y2="210" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M170 185 Q195 185 195 210" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="310" y1="185" x2="310" y2="210" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M310 185 Q335 185 335 210" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <line x1="140" y1="260" x2="175" y2="260" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M140 260 Q140 285 175 285" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <!-- Terrace door -->
+              <line x1="500" y1="80" x2="500" y2="120" stroke="#0e0e0e" stroke-width="4"/>
+              <path d="M500 80 Q520 80 520 120" stroke="#c8a46b" stroke-width="1" fill="none"/>
+              <!-- Labels -->
+              <text x="118" y="145" fill="#c8a46b" font-size="12" text-anchor="middle" font-family="Inter" opacity="0.9">Гостиная</text>
+              <text x="308" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 1</text>
+              <text x="440" y="130" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Спальня 2</text>
+              <text x="118" y="335" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Кухня-столовая</text>
+              <text x="308" y="328" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел 1</text>
+              <text x="440" y="328" fill="#c8a46b" font-size="11" text-anchor="middle" font-family="Inter" opacity="0.9">Санузел 2</text>
+              <!-- Furniture -->
+              <rect x="40" y="160" width="130" height="65" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="255" y="45" width="100" height="110" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="395" y="45" width="80" height="110" rx="4" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <rect x="40" y="275" width="95" height="80" rx="2" stroke="#c8a46b" stroke-width="1" fill="none" opacity="0.4"/>
+              <!-- Windows -->
+              <line x1="20" y1="60" x2="20" y2="150" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="80" y1="20" x2="190" y2="20" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="390" y1="20" x2="480" y2="20" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <line x1="500" y1="140" x2="500" y2="220" stroke="#c8a46b" stroke-width="4" opacity="0.7"/>
+              <!-- Gold corner accent -->
+              <line x1="20" y1="20" x2="20" y2="50" stroke="#c8a46b" stroke-width="3" opacity="1"/>
+              <line x1="20" y1="20" x2="50" y2="20" stroke="#c8a46b" stroke-width="3" opacity="1"/>
+            </svg>
+            <div class="absolute top-6 left-6 bg-primary/20 border border-primary/40 px-3 py-1.5 text-primary text-xs font-bold uppercase tracking-widest">VIP Пентхаус</div>
+          </div>
+          <div class="w-full lg:w-2/5 p-10 lg:p-14 flex flex-col justify-center bg-background-dark">
+            <div class="mb-8">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Вариант 4 из 4</p>
+              <h4 class="font-serif text-3xl text-white mb-4 italic">Пентхаус</h4>
+              <div class="flex items-end gap-2">
+                <span class="text-primary text-6xl font-serif leading-none">152</span>
+                <span class="text-slate-400 text-xl font-light mb-1">м²</span>
+              </div>
+            </div>
+            <ul class="space-y-4 mb-10 text-slate-400 font-light">
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Этаж:</span><span class="text-white">11–12 (верхние)</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Потолки:</span><span class="text-white">4.0 м</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Вид:</span><span class="text-white">Панорама 360°</span></li>
+              <li class="flex justify-between border-b border-primary/10 pb-3"><span>Терраса:</span><span class="text-white">от 35 м²</span></li>
+            </ul>
+            <button onclick="openModal('penthouse')" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all active:scale-95">
+              Получить предложение
+            </button>
+          </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button id="prev-btn" onclick="slidePrev()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all z-10 hover:scale-110 active:scale-90" aria-label="Предыдущий">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button id="next-btn" onclick="slideNext()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background-dark border border-primary/30 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-all z-10 hover:scale-110 active:scale-90" aria-label="Следующий">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+      </div>
+
+      <!-- Pagination Dots -->
+      <div id="slider-dots" class="flex justify-center gap-2 mt-8">
+        <button class="dot-btn active" onclick="goToSlide(0)" aria-label="Слайд 1"></button>
+        <button class="dot-btn" onclick="goToSlide(1)" aria-label="Слайд 2"></button>
+        <button class="dot-btn" onclick="goToSlide(2)" aria-label="Слайд 3"></button>
+        <button class="dot-btn" onclick="goToSlide(3)" aria-label="Слайд 4"></button>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Location Section -->
-<section class="py-24 bg-secondary-dark" id="location">
-<div class="max-w-7xl mx-auto px-6">
-<div class="grid lg:grid-cols-2 gap-16 items-start">
-<div>
-<h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Расположение</h3>
-<h2 class="font-serif text-4xl text-white mb-8">Жизнь в центре города</h2>
-<ul class="space-y-6">
-<li class="flex items-center gap-4 text-slate-300">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-<span class="text-lg">Центральный пляж в 10 минутах пешком</span>
-</li>
-<li class="flex items-center gap-4 text-slate-300">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-<span class="text-lg">Ведущие школы и детские сады города</span>
-</li>
-<li class="flex items-center gap-4 text-slate-300">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-<span class="text-lg">Лучшие рестораны и кофейни в шаговой доступности</span>
-</li>
-<li class="flex items-center gap-4 text-slate-300">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-<span class="text-lg">Парковые зоны и места для отдыха</span>
-</li>
-</ul>
-<div class="mt-12 p-8 border border-primary/20 glass-card">
-<p class="text-primary font-serif text-xl mb-2 italic">Адрес объекта:</p>
-<p class="text-white text-lg">г. Избербаш, ул. Центральная, д. 42</p>
-</div>
-</div>
-<div class="relative h-[500px] w-full bg-background-dark border border-primary/10 overflow-hidden shadow-2xl">
-<div class="absolute inset-0 opacity-40 mix-blend-luminosity grayscale" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-wEvqUtNWveDtBJfC5LA1EaLTL8PzT-LTOmy2H-zON-6no43VlTiMKquCT4ad3xtwC_31C6JWe_BKIqLYzIFWLEjaa9l42U-WNlfctzY92RlwNikbcxZoZ-doPxPiEM_yzMvb2JP9w9SRZ3eVIFToJPh1pIkkLFO_MtkUnWqrOPFBVMd7E5FZ7vSRafu-XXvEbRTOLbjyA-MUDCkyWwHOy525wcYYkH1XaZ530pHHoujwZph_BZ1hTaZwIxJ3ri_wbsAdWyTFVE7t'); background-size: cover; background-position: center;"></div>
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="relative">
-<div class="absolute -inset-4 bg-primary/20 rounded-full animate-ping"></div>
-<span class="material-symbols-outlined text-primary text-5xl relative z-10">location_on</span>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+<!-- ════════════════ LOCATION ════════════════ -->
+<section class="py-24 bg-background-dark" id="location">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <div class="reveal-left">
+        <h3 class="text-primary text-sm uppercase tracking-[0.3em] font-bold mb-4">Расположение</h3>
+        <h2 class="font-serif text-4xl text-white mb-8">Жизнь в центре города</h2>
+        <ul class="space-y-5">
+          <li class="flex items-center gap-4 text-slate-300 group cursor-default">
+            <span class="w-2 h-2 bg-primary rounded-full flex-shrink-0 group-hover:scale-150 transition-transform"></span>
+            <span class="text-lg group-hover:text-white transition-colors">Центральный пляж в 10 минутах пешком</span>
+          </li>
+          <li class="flex items-center gap-4 text-slate-300 group cursor-default">
+            <span class="w-2 h-2 bg-primary rounded-full flex-shrink-0 group-hover:scale-150 transition-transform"></span>
+            <span class="text-lg group-hover:text-white transition-colors">Ведущие школы и детские сады города</span>
+          </li>
+          <li class="flex items-center gap-4 text-slate-300 group cursor-default">
+            <span class="w-2 h-2 bg-primary rounded-full flex-shrink-0 group-hover:scale-150 transition-transform"></span>
+            <span class="text-lg group-hover:text-white transition-colors">Лучшие рестораны и кофейни в шаговой доступности</span>
+          </li>
+          <li class="flex items-center gap-4 text-slate-300 group cursor-default">
+            <span class="w-2 h-2 bg-primary rounded-full flex-shrink-0 group-hover:scale-150 transition-transform"></span>
+            <span class="text-lg group-hover:text-white transition-colors">Парковые зоны и места для отдыха</span>
+          </li>
+        </ul>
+        <div class="mt-12 p-8 border border-primary/20 glass-card">
+          <p class="text-primary font-serif text-xl mb-2 italic">Адрес объекта:</p>
+          <p class="text-white text-lg">г. Избербаш, ул. Центральная, д. 42</p>
+        </div>
+        <button onclick="openModal('visit')" class="mt-8 border border-primary text-primary px-8 py-3 font-bold uppercase tracking-widest text-xs hover:bg-primary hover:text-black transition-all active:scale-95">
+          Записаться на просмотр
+        </button>
+      </div>
+      <div class="relative h-[500px] w-full bg-background-dark border border-primary/10 overflow-hidden shadow-2xl reveal-right cursor-pointer group" onclick="openModal('visit')">
+        <div class="absolute inset-0 opacity-40 mix-blend-luminosity grayscale group-hover:opacity-60 group-hover:grayscale-0 transition-all duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-wEvqUtNWveDtBJfC5LA1EaLTL8PzT-LTOmy2H-zON-6no43VlTiMKquCT4ad3xtwC_31C6JWe_BKIqLYzIFWLEjaa9l42U-WNlfctzY92RlwNikbcxZoZ-doPxPiEM_yzMvb2JP9w9SRZ3eVIFToJPh1pIkkLFO_MtkUnWqrOPFBVMd7E5FZ7vSRafu-XXvEbRTOLbjyA-MUDCkyWwHOy525wcYYkH1XaZ530pHHoujwZph_BZ1hTaZwIxJ3ri_wbsAdWyTFVE7t'); background-size: cover; background-position: center;"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="relative flex flex-col items-center gap-3">
+            <div class="absolute -inset-8 bg-primary/20 rounded-full animate-ping"></div>
+            <span class="material-symbols-outlined text-primary text-5xl relative z-10 drop-shadow-lg">location_on</span>
+            <div class="relative z-10 bg-background-dark/80 border border-primary/30 px-4 py-2 text-white text-sm font-medium backdrop-blur-sm">
+              ул. Центральная, 42
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background-dark/60 to-transparent"></div>
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center">
+          <span class="text-primary/50 text-xs uppercase tracking-widest">Нажмите для записи на просмотр</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Footer -->
+
+<!-- ════════════════ FOOTER ════════════════ -->
 <footer class="py-12 bg-background-dark border-t border-primary/10">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex flex-col md:flex-row justify-between items-center gap-8">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary text-3xl">domain</span>
-<span class="font-serif text-xl font-bold tracking-tight text-white uppercase">ЖК Центральный</span>
-</div>
-<p class="text-slate-500 text-sm">© 2024 Все права защищены. Проектная декларация на сайте наш.дом.рф</p>
-<div class="flex gap-6">
-<a class="text-slate-400 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">share</span>
-</a>
-<a class="text-slate-400 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined">call</span>
-</a>
-</div>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToTop()">
+        <span class="material-symbols-outlined text-primary text-3xl">domain</span>
+        <span class="font-serif text-xl font-bold tracking-tight text-white uppercase">ЖК Центральный</span>
+      </div>
+      <p class="text-slate-500 text-sm text-center">© 2025 Все права защищены. Проектная декларация на сайте наш.дом.рф</p>
+      <div class="flex gap-6">
+        <a onclick="showToast('Ссылка скопирована!')" class="text-slate-400 hover:text-primary transition-colors cursor-pointer" href="#">
+          <span class="material-symbols-outlined">share</span>
+        </a>
+        <a onclick="openModal('call')" class="text-slate-400 hover:text-primary transition-colors cursor-pointer">
+          <span class="material-symbols-outlined">call</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>
-</body></html>
+
+<!-- ════════════════ MODAL ════════════════ -->
+<div id="modal-overlay" role="dialog" aria-modal="true" onclick="handleOverlayClick(event)">
+  <div id="modal-box" class="bg-secondary-dark border border-primary/20 w-full max-w-md mx-4 p-8 relative shadow-2xl animate-[fadeInUp_0.3s_ease]">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<!-- ════════════════ TOAST ════════════════ -->
+<div id="toast">
+  <div class="flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+    <span id="toast-text">Готово!</span>
+  </div>
+</div>
+
+<style>
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+// ══════════════════════════════════
+//  SMOOTH SCROLL & HEADER
+// ══════════════════════════════════
+function smoothScroll(target) {
+  const el = document.querySelector(target);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Header scroll effect + active nav
+const header = document.getElementById('header');
+const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+  // Header style
+  if (window.scrollY > 60) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+
+  // Parallax hero
+  const heroBg = document.getElementById('hero-bg');
+  if (heroBg && window.scrollY < window.innerHeight) {
+    heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+  }
+
+  // Active nav section
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active', 'text-primary');
+    if (a.getAttribute('href') === '#' + current) {
+      a.classList.add('active', 'text-primary');
+    }
+  });
+});
+
+// ══════════════════════════════════
+//  MOBILE MENU
+// ══════════════════════════════════
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  const menu = document.getElementById('mobile-menu');
+  const icon = document.getElementById('menu-icon');
+  if (menuOpen) {
+    menu.style.display = 'block';
+    requestAnimationFrame(() => menu.classList.add('open'));
+    icon.textContent = 'close';
+  } else {
+    menu.classList.remove('open');
+    icon.textContent = 'menu';
+    setTimeout(() => { menu.style.display = 'none'; }, 300);
+  }
+}
+function closeMenu() {
+  if (menuOpen) toggleMenu();
+}
+
+// ══════════════════════════════════
+//  SCROLL REVEAL
+// ══════════════════════════════════
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// ══════════════════════════════════
+//  FLOOR PLAN SLIDER
+// ══════════════════════════════════
+const allSlides = Array.from(document.querySelectorAll('.plan-slide'));
+let visibleSlides = [...allSlides]; // after filter
+let currentIndex = 0;
+let slideDirection = 'right';
+let touchStartX = 0;
+
+function updateSlider(newIndex, direction = 'right') {
+  const prev = visibleSlides[currentIndex];
+  currentIndex = ((newIndex % visibleSlides.length) + visibleSlides.length) % visibleSlides.length;
+  const curr = visibleSlides[currentIndex];
+
+  if (prev && prev !== curr) {
+    prev.classList.remove('active', 'slide-left');
+  }
+  if (curr) {
+    curr.classList.add('active');
+    if (direction === 'left') {
+      curr.classList.add('slide-left');
+    } else {
+      curr.classList.remove('slide-left');
+    }
+    setTimeout(() => curr.classList.remove('slide-left'), 600);
+  }
+
+  updateDots();
+}
+
+function slideNext() {
+  updateSlider(currentIndex + 1, 'right');
+}
+function slidePrev() {
+  updateSlider(currentIndex - 1, 'left');
+}
+function goToSlide(i) {
+  const direction = i > currentIndex ? 'right' : 'left';
+  updateSlider(i, direction);
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('.dot-btn');
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === currentIndex);
+  });
+}
+
+// Touch / swipe support
+function sliderTouchStart(e) {
+  touchStartX = e.touches[0].clientX;
+}
+function sliderTouchEnd(e) {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) {
+    if (dx < 0) slideNext();
+    else slidePrev();
+  }
+}
+
+// Mouse drag (desktop swipe)
+let isDragging = false, dragStartX = 0;
+function sliderDragStart(e) {
+  isDragging = true;
+  dragStartX = e.clientX;
+  document.addEventListener('mouseup', sliderDragEnd, { once: true });
+}
+function sliderDragEnd(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  const dx = e.clientX - dragStartX;
+  if (Math.abs(dx) > 60) {
+    if (dx < 0) slideNext();
+    else slidePrev();
+  }
+}
+
+// Keyboard navigation when plans section in view
+document.addEventListener('keydown', (e) => {
+  const plansSection = document.getElementById('plans');
+  const rect = plansSection.getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+    if (e.key === 'ArrowRight') slideNext();
+    if (e.key === 'ArrowLeft') slidePrev();
+  }
+});
+
+// Filter plans by room count
+function filterPlans(filter) {
+  // Update filter button styles
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    const isActive = btn.dataset.filter === filter;
+    btn.classList.toggle('active', isActive);
+    btn.classList.toggle('bg-primary/10', isActive);
+    btn.classList.toggle('text-primary', isActive);
+    btn.classList.toggle('border-primary/30', isActive);
+    btn.classList.toggle('text-slate-400', !isActive);
+    btn.classList.toggle('border-primary/10', !isActive);
+  });
+
+  // Show/hide slides
+  allSlides.forEach(s => s.classList.remove('active'));
+  if (filter === 'all') {
+    visibleSlides = [...allSlides];
+  } else {
+    visibleSlides = allSlides.filter(s => s.dataset.rooms === filter);
+  }
+
+  currentIndex = 0;
+  if (visibleSlides[0]) visibleSlides[0].classList.add('active');
+
+  // Update dots
+  const dotsContainer = document.getElementById('slider-dots');
+  dotsContainer.innerHTML = '';
+  visibleSlides.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'dot-btn' + (i === 0 ? ' active' : '');
+    btn.setAttribute('aria-label', 'Слайд ' + (i+1));
+    btn.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(btn);
+  });
+}
+
+// Auto-play
+let autoPlayInterval = setInterval(slideNext, 6000);
+document.getElementById('slider-wrapper').addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+document.getElementById('slider-wrapper').addEventListener('mouseleave', () => {
+  autoPlayInterval = setInterval(slideNext, 6000);
+});
+
+// ══════════════════════════════════
+//  MODAL
+// ══════════════════════════════════
+const modalContent = {
+  default: `
+    <h3 class="font-serif text-2xl text-white mb-2 italic">Выбрать квартиру</h3>
+    <p class="text-slate-400 text-sm mb-6">Оставьте контакты — менеджер свяжется с вами в течение 15 минут</p>
+    <form onsubmit="submitModal(event)" class="space-y-4">
+      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <select class="w-full bg-background-dark border border-primary/20 text-slate-400 px-4 py-3 text-sm focus:outline-none focus:border-primary/60 transition-colors">
+        <option value="">Тип квартиры</option>
+        <option>1-комнатная (42.5 м²)</option>
+        <option>2-комнатная (65 м²)</option>
+        <option>3-комнатная (89 м²)</option>
+        <option>Пентхаус (152 м²)</option>
+      </select>
+      <button type="submit" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Отправить заявку</button>
+    </form>
+    <p class="text-slate-600 text-xs mt-4 text-center">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
+  `,
+  cost: `
+    <h3 class="font-serif text-2xl text-white mb-2 italic">Узнать стоимость</h3>
+    <p class="text-slate-400 text-sm mb-6">Укажите ваши контакты для получения актуального прайс-листа</p>
+    <form onsubmit="submitModal(event)" class="space-y-4">
+      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <button type="submit" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Получить прайс</button>
+    </form>
+  `,
+  presentation: `
+    <h3 class="font-serif text-2xl text-white mb-2 italic">Получить презентацию</h3>
+    <p class="text-slate-400 text-sm mb-6">Пришлём полный каталог с планировками и ценами на WhatsApp или Email</p>
+    <form onsubmit="submitModal(event)" class="space-y-4">
+      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="email" placeholder="Email адрес" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" placeholder="WhatsApp / Телефон" class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <button type="submit" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Отправить</button>
+    </form>
+  `,
+  penthouse: `
+    <div class="flex items-center gap-2 mb-6">
+      <span class="material-symbols-outlined text-primary">workspace_premium</span>
+      <span class="text-primary text-xs font-bold uppercase tracking-widest">VIP предложение</span>
+    </div>
+    <h3 class="font-serif text-2xl text-white mb-2 italic">Пентхаус · 152 м²</h3>
+    <p class="text-slate-400 text-sm mb-6">Оставьте контакты — персональный менеджер подготовит индивидуальное предложение</p>
+    <form onsubmit="submitModal(event)" class="space-y-4">
+      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <button type="submit" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Получить VIP предложение</button>
+    </form>
+  `,
+  visit: `
+    <h3 class="font-serif text-2xl text-white mb-2 italic">Записаться на просмотр</h3>
+    <p class="text-slate-400 text-sm mb-6">Покажем шоурум и макет здания в удобное для вас время</p>
+    <form onsubmit="submitModal(event)" class="space-y-4">
+      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="date" class="w-full bg-background-dark border border-primary/20 text-slate-400 px-4 py-3 text-sm focus:outline-none focus:border-primary/60 transition-colors" min="${new Date().toISOString().split('T')[0]}"/>
+      <button type="submit" class="w-full py-4 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Записаться</button>
+    </form>
+  `,
+  call: `
+    <h3 class="font-serif text-2xl text-white mb-2 italic">Связаться с нами</h3>
+    <p class="text-slate-400 text-sm mb-8">Мы работаем ежедневно с 9:00 до 20:00</p>
+    <div class="space-y-4">
+      <a href="tel:+78001234567" class="flex items-center gap-4 p-4 border border-primary/10 hover:border-primary/40 transition-all group">
+        <span class="material-symbols-outlined text-primary">call</span>
+        <div>
+          <p class="text-white font-medium group-hover:text-primary transition-colors">+7 (800) 123-45-67</p>
+          <p class="text-slate-500 text-xs">Бесплатный звонок</p>
+        </div>
+      </a>
+      <a href="https://wa.me/78001234567" class="flex items-center gap-4 p-4 border border-primary/10 hover:border-primary/40 transition-all group">
+        <span class="material-symbols-outlined text-primary">chat</span>
+        <div>
+          <p class="text-white font-medium group-hover:text-primary transition-colors">WhatsApp</p>
+          <p class="text-slate-500 text-xs">Ответим за 5 минут</p>
+        </div>
+      </a>
+    </div>
+    <button onclick="closeModal()" class="w-full mt-6 py-3 border border-primary/20 text-slate-400 text-xs font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition-all">Закрыть</button>
+  `
+};
+
+function openModal(type = 'default') {
+  const overlay = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+  content.innerHTML = modalContent[type] || modalContent.default;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+function submitModal(e) {
+  e.preventDefault();
+  closeModal();
+  showToast('Заявка принята! Мы свяжемся с вами в течение 15 минут.');
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ══════════════════════════════════
+//  TOAST
+// ══════════════════════════════════
+let toastTimer;
+function showToast(msg = 'Готово!') {
+  const toast = document.getElementById('toast');
+  const txt = document.getElementById('toast-text');
+  txt.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// Nav links smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = a.getAttribute('href');
+    if (target && target !== '#') {
+      e.preventDefault();
+      smoothScroll(target);
+    }
+  });
+});
+</script>
+</body>
+</html>
