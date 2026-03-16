@@ -244,7 +244,7 @@
     stroke-linejoin: round;
     stroke-dasharray: 4500;
     stroke-dashoffset: 4500;
-    animation: preDrawStroke 2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    animation: preDrawStroke 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
     transition: fill 0.6s ease;
   }
 
@@ -1123,22 +1123,22 @@
   // Lock scroll while preloader is active
   document.body.style.overflow = 'hidden';
 
-  // Phase 1 — fill strokes → solid gold (at 2.1s, сразу после конца отрисовки)
+  // Phase 1 — fill strokes → solid gold (at 1.3s, сразу после конца отрисовки)
   setTimeout(function () {
     const svgText = document.getElementById('pre-svg-text');
     if (svgText) svgText.classList.add('fill');
-  }, 2100);
+  }, 1300);
 
-  // Phase 2 — curtain slides up (fill 0.6s + пауза 0.5s = 3.2s)
+  // Phase 2 — curtain slides up (fill 0.6s + пауза 0.5s = 2.4s)
   setTimeout(function () {
     preloader.classList.add('exit');
     document.body.style.overflow = '';
-  }, 3200);
+  }, 2400);
 
-  // Phase 3 — remove from DOM after curtain gone (at 4.4s)
+  // Phase 3 — remove from DOM after curtain gone (at 3.6s)
   setTimeout(function () {
     if (preloader && preloader.parentNode) preloader.parentNode.removeChild(preloader);
-  }, 4400);
+  }, 3600);
 })();
 
 // ══════════════════════════════════
