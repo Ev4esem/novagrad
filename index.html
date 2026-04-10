@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="ru">
+<html class="dark overflow-x-hidden" lang="ru">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -195,6 +195,12 @@
   }
   @keyframes drawLine {
     to { stroke-dashoffset: 0; }
+  }
+
+  /* Запрет горизонтального скролла */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
   /* Header scroll effect */
