@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jk-centralny.ru/sitemap.xml
+
+# Crawl-delay для бережной индексации
+Crawl-delay: 1
+
+# Запрет индексации служебных файлов
+Disallow: /*.json$
+Disallow: /*.mp4$
+
+# Яндекс
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+Host: https://jk-centralny.ru
+
+# Google
+User-agent: Googlebot
+Allow: /

@@ -1,0 +1,4 @@
+# Security Policy for JK Centralny
+Contact: mailto:security@jk-centralny.ru
+Expires: 2026-12-31T23:59:00.000Z
+Preferred-Languages: ru, en

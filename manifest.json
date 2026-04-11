@@ -1,0 +1,23 @@
+{
+  "name": "ЖК Центральный — Премиальный дом в Избербаше",
+  "short_name": "ЖК Центральный",
+  "description": "Премиальный 12-этажный жилой комплекс в центре Избербаша. Квартиры от 41 до 106 м² с панорамным остеклением, высокими потолками 3.3м и закрытой территорией.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0e0e",
+  "theme_color": "#c8a46b",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "ru",
+  "orientation": "portrait-primary"
+}
