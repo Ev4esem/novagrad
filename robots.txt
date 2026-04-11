@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://jk-centralny.ru/sitemap.xml
+Sitemap: https://nova-grad.ru/sitemap.xml
 
 # Crawl-delay для бережной индексации
 Crawl-delay: 1
@@ -15,7 +15,7 @@ Disallow: /*.mp4$
 User-agent: Yandex
 Allow: /
 Crawl-delay: 2
-Host: https://jk-centralny.ru
+Host: https://nova-grad.ru
 
 # Google
 User-agent: Googlebot
