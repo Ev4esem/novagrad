@@ -1,4 +1,0 @@
-# Security Policy for JK Centralny
-Contact: mailto:security@nova-grad.ru
-Expires: 2026-12-31T23:59:00.000Z
-Preferred-Languages: ru, en
