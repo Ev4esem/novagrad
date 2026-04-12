@@ -1691,8 +1691,72 @@ function closeLightbox(e) {
   document.getElementById('image-lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
+// ══════════════════════════════════
+//  TELEGRAM CONFIG
+// ══════════════════════════════════
+const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';  // Вставь токен бота сюда
+const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';       // Вставь CHAT_ID сюда
+
+async function sendToTelegram(formData) {
+  const text = `🏢 *Новая заявка с сайта NOVAGRAD*
+
+👤 *Имя:* ${formData.name || '—'}
+📞 *Телефон:* ${formData.phone || '—'}
+📧 *Email:* ${formData.email || '—'}
+🏠 *Тип квартиры:* ${formData.apartmentType || '—'}
+📅 *Дата просмотра:* ${formData.date || '—'}
+📝 *Тип заявки:* ${formData.formType || 'Общая'}
+
+⏰ _${new Date().toLocaleString('ru-RU')}_`;
+
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: text,
+        parse_mode: 'Markdown'
+      })
+    });
+    return response.ok;
+  } catch (error) {
+    console.error('Telegram error:', error);
+    return false;
+  }
+}
+
 function submitModal(e) {
   e.preventDefault();
+
+  const form = e.target;
+  const inputs = form.querySelectorAll('input, select');
+
+  // Собираем данные формы
+  const formData = {
+    formType: document.querySelector('#modal-content h3')?.textContent || 'Заявка'
+  };
+
+  inputs.forEach(input => {
+    const value = input.value.trim();
+    if (!value) return;
+
+    if (input.type === 'text' && input.placeholder.includes('имя')) {
+      formData.name = value;
+    } else if (input.type === 'tel') {
+      formData.phone = value;
+    } else if (input.type === 'email') {
+      formData.email = value;
+    } else if (input.type === 'date') {
+      formData.date = value;
+    } else if (input.tagName === 'SELECT' && value) {
+      formData.apartmentType = value;
+    }
+  });
+
+  // Отправляем в Telegram
+  sendToTelegram(formData);
+
   closeModal();
   showToast('Заявка принята! Мы свяжемся с вами в течение 15 минут.');
 }
