@@ -1585,15 +1585,9 @@ const modalContent = {
     <h3 class="font-serif text-2xl text-white mb-2 italic">Выбрать квартиру</h3>
     <p class="text-slate-400 text-sm mb-6">Оставьте контакты — менеджер свяжется с вами в течение 15 минут</p>
     <form onsubmit="submitModal(event)" class="space-y-4">
-      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <select class="w-full bg-background-dark border border-primary/20 text-slate-400 px-4 py-3 text-sm focus:outline-none focus:border-primary/60 transition-colors">
-        <option value="">Тип квартиры</option>
-        <option>1-комнатная (42.5 м²)</option>
-        <option>2-комнатная (65 м²)</option>
-        <option>3-комнатная (89 м²)</option>
-        <option>Пентхаус (152 м²)</option>
-      </select>
+      <input type="text" name="name" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" name="phone" placeholder="+7 ___ ___ __ __" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors phone-mask"/>
+      <p class="text-red-500 text-xs hidden phone-error">Введите корректный номер телефона (11 цифр)</p>
       <button type="submit" class="w-full py-3 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Отправить заявку</button>
     </form>
     <p class="text-slate-600 text-xs mt-4 text-center">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
@@ -1602,18 +1596,19 @@ const modalContent = {
     <h3 class="font-serif text-2xl text-white mb-2 italic">Узнать стоимость</h3>
     <p class="text-slate-400 text-sm mb-6">Укажите ваши контакты для получения актуального прайс-листа</p>
     <form onsubmit="submitModal(event)" class="space-y-4">
-      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="text" name="name" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" name="phone" placeholder="+7 ___ ___ __ __" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors phone-mask"/>
+      <p class="text-red-500 text-xs hidden phone-error">Введите корректный номер телефона (11 цифр)</p>
       <button type="submit" class="w-full py-3 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Получить прайс</button>
     </form>
   `,
   presentation: `
     <h3 class="font-serif text-2xl text-white mb-2 italic">Получить презентацию</h3>
-    <p class="text-slate-400 text-sm mb-6">Пришлём полный каталог с планировками и ценами на WhatsApp или Email</p>
+    <p class="text-slate-400 text-sm mb-6">Пришлём полный каталог с планировками и ценами</p>
     <form onsubmit="submitModal(event)" class="space-y-4">
-      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="email" placeholder="Email адрес" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="tel" placeholder="WhatsApp / Телефон" class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="text" name="name" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" name="phone" placeholder="+7 ___ ___ __ __" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors phone-mask"/>
+      <p class="text-red-500 text-xs hidden phone-error">Введите корректный номер телефона (11 цифр)</p>
       <button type="submit" class="w-full py-3 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Отправить</button>
     </form>
   `,
@@ -1625,8 +1620,9 @@ const modalContent = {
     <h3 class="font-serif text-2xl text-white mb-2 italic">Пентхаус · 152 м²</h3>
     <p class="text-slate-400 text-sm mb-6">Оставьте контакты — персональный менеджер подготовит индивидуальное предложение</p>
     <form onsubmit="submitModal(event)" class="space-y-4">
-      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="text" name="name" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" name="phone" placeholder="+7 ___ ___ __ __" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors phone-mask"/>
+      <p class="text-red-500 text-xs hidden phone-error">Введите корректный номер телефона (11 цифр)</p>
       <button type="submit" class="w-full py-3 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Получить VIP предложение</button>
     </form>
   `,
@@ -1634,9 +1630,9 @@ const modalContent = {
     <h3 class="font-serif text-2xl text-white mb-2 italic">Записаться на просмотр</h3>
     <p class="text-slate-400 text-sm mb-6">Покажем шоурум и макет здания в удобное для вас время</p>
     <form onsubmit="submitModal(event)" class="space-y-4">
-      <input type="text" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="tel" placeholder="+7 (___) ___-__-__" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
-      <input type="date" class="w-full bg-background-dark border border-primary/20 text-slate-400 px-4 py-3 text-sm focus:outline-none focus:border-primary/60 transition-colors" min="${new Date().toISOString().split('T')[0]}"/>
+      <input type="text" name="name" placeholder="Ваше имя" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors"/>
+      <input type="tel" name="phone" placeholder="+7 ___ ___ __ __" required class="w-full bg-background-dark border border-primary/20 text-white px-4 py-3 text-sm focus:outline-none focus:border-primary/60 placeholder-slate-600 transition-colors phone-mask"/>
+      <p class="text-red-500 text-xs hidden phone-error">Введите корректный номер телефона (11 цифр)</p>
       <button type="submit" class="w-full py-3 bg-primary text-black font-bold uppercase tracking-[0.2em] text-xs hover:brightness-110 transition-all">Записаться</button>
     </form>
   `,
@@ -1663,12 +1659,62 @@ const modalContent = {
   `
 };
 
+// Маска телефона +7 XXX XXX XX XX
+function formatPhone(value) {
+  const digits = value.replace(/\D/g, '').slice(0, 11);
+  if (!digits) return '';
+
+  let result = '+7';
+  if (digits.length > 1) result += ' ' + digits.slice(1, 4);
+  if (digits.length > 4) result += ' ' + digits.slice(4, 7);
+  if (digits.length > 7) result += ' ' + digits.slice(7, 9);
+  if (digits.length > 9) result += ' ' + digits.slice(9, 11);
+
+  return result;
+}
+
+function initPhoneMask(input) {
+  input.addEventListener('focus', () => {
+    if (!input.value) input.value = '+7 ';
+  });
+
+  input.addEventListener('input', (e) => {
+    const cursorPos = e.target.selectionStart;
+    const oldLength = e.target.value.length;
+    e.target.value = formatPhone(e.target.value);
+    const newLength = e.target.value.length;
+    const newPos = Math.max(3, cursorPos + (newLength - oldLength));
+    e.target.setSelectionRange(newPos, newPos);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && input.value.length <= 3) {
+      e.preventDefault();
+    }
+  });
+
+  input.addEventListener('blur', () => {
+    if (input.value === '+7 ' || input.value === '+7') input.value = '';
+  });
+}
+
+function validatePhone(phone) {
+  const digits = phone.replace(/\D/g, '');
+  return digits.length === 11;
+}
+
 function openModal(type = 'default') {
   const overlay = document.getElementById('modal-overlay');
   const content = document.getElementById('modal-content');
   content.innerHTML = modalContent[type] || modalContent.default;
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Инициализируем маску телефона
+  const phoneInput = content.querySelector('.phone-mask');
+  if (phoneInput) {
+    initPhoneMask(phoneInput);
+  }
 }
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
@@ -1700,12 +1746,9 @@ const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';       // Вставь CHAT_ID сюда
 async function sendToTelegram(formData) {
   const text = `🏢 *Новая заявка с сайта NOVAGRAD*
 
-👤 *Имя:* ${formData.name || '—'}
-📞 *Телефон:* ${formData.phone || '—'}
-📧 *Email:* ${formData.email || '—'}
-🏠 *Тип квартиры:* ${formData.apartmentType || '—'}
-📅 *Дата просмотра:* ${formData.date || '—'}
-📝 *Тип заявки:* ${formData.formType || 'Общая'}
+👤 *Имя:* ${formData.name}
+📞 *Телефон:* ${formData.phone}
+📝 *Тип заявки:* ${formData.formType}
 
 ⏰ _${new Date().toLocaleString('ru-RU')}_`;
 
@@ -1730,29 +1773,26 @@ function submitModal(e) {
   e.preventDefault();
 
   const form = e.target;
-  const inputs = form.querySelectorAll('input, select');
+  const phoneInput = form.querySelector('input[name="phone"]');
+  const phoneError = form.querySelector('.phone-error');
+
+  // Валидация телефона
+  if (!validatePhone(phoneInput.value)) {
+    phoneError?.classList.remove('hidden');
+    phoneInput.classList.add('border-red-500');
+    phoneInput.focus();
+    return;
+  }
+
+  phoneError?.classList.add('hidden');
+  phoneInput.classList.remove('border-red-500');
 
   // Собираем данные формы
   const formData = {
+    name: form.querySelector('input[name="name"]').value.trim(),
+    phone: phoneInput.value.trim(),
     formType: document.querySelector('#modal-content h3')?.textContent || 'Заявка'
   };
-
-  inputs.forEach(input => {
-    const value = input.value.trim();
-    if (!value) return;
-
-    if (input.type === 'text' && input.placeholder.includes('имя')) {
-      formData.name = value;
-    } else if (input.type === 'tel') {
-      formData.phone = value;
-    } else if (input.type === 'email') {
-      formData.email = value;
-    } else if (input.type === 'date') {
-      formData.date = value;
-    } else if (input.tagName === 'SELECT' && value) {
-      formData.apartmentType = value;
-    }
-  });
 
   // Отправляем в Telegram
   sendToTelegram(formData);
