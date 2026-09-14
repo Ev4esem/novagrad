@@ -1737,34 +1737,16 @@ function closeLightbox(e) {
   document.getElementById('image-lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
-// ══════════════════════════════════
-//  TELEGRAM CONFIG
-// ══════════════════════════════════
-const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';  // Вставь токен бота сюда
-const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';       // Вставь CHAT_ID сюда
-
 async function sendToTelegram(formData) {
-  const text = `🏢 *Новая заявка с сайта NOVAGRAD*
-
-👤 *Имя:* ${formData.name}
-📞 *Телефон:* ${formData.phone}
-📝 *Тип заявки:* ${formData.formType}
-
-⏰ _${new Date().toLocaleString('ru-RU')}_`;
-
   try {
-    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    const response = await fetch('/send-lead.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: text,
-        parse_mode: 'Markdown'
-      })
+      body: JSON.stringify(formData)
     });
     return response.ok;
   } catch (error) {
-    console.error('Telegram error:', error);
+    console.error('Lead send error:', error);
     return false;
   }
 }
